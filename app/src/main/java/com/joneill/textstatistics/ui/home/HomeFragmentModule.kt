@@ -1,5 +1,6 @@
 package com.joneill.textstatistics.ui.home
 
+import android.content.Context
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joneill.textstatistics.ui.home.view.HomeFragment
 import com.joneill.textstatistics.ui.home.view.HomeMVPView
@@ -26,5 +27,4 @@ class HomeFragmentModule {
 
     @Provides
     internal fun provideLinearLayoutManager(fragment: HomeFragment): LinearLayoutManager = LinearLayoutManager(fragment.activity)
-
 }
