@@ -13,7 +13,6 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:background="#ffffff"
         android:orientation="vertical"
         app:cardCornerRadius="4dp"
         app:cardElevation="1dp">
@@ -21,6 +20,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:foreground="?attr/selectableItemBackground"
+            android:clickable="true"
             android:orientation="horizontal">
 
             <ImageView
