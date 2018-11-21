@@ -25,7 +25,6 @@ open class HomePresenter<V : HomeMVPView, I : HomeMVPInteractor> @Inject interna
     }
 
     private fun getConversations() = interactor?.let {
-        //getView()?.inflateUserDetails(userData)
         var creators = it.getTextData()
         creators = it.filterCreatorsContactsOnly(creators)
         getView()?.displayContactsList(creators)
