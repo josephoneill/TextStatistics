@@ -17,7 +17,6 @@ import javax.inject.Inject
 open class HomePresenter<V : HomeMVPView, I : HomeMVPInteractor> @Inject internal constructor(interactor: I) : BasePresenter<V, I>(interactor = interactor), HomeMVPPresenter<V, I> {
 
     override fun onViewPrepared() {
-        Log.e("GETTING FIRST", "GETTING FIRST")
         getConversations()
     }
 
@@ -30,7 +29,6 @@ open class HomePresenter<V : HomeMVPView, I : HomeMVPInteractor> @Inject interna
         var creators = it.getTextData()
         creators = it.filterCreatorsContactsOnly(creators)
         getView()?.displayContactsList(creators)
-        Log.e("GETTING", "GETTING")
     }
 
 }
