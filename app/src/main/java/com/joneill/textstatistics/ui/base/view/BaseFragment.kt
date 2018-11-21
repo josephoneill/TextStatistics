@@ -4,10 +4,9 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
 
-abstract class BaseFragment() : Fragment(), MVPView {
+abstract class BaseFragment : Fragment(), MVPView {
 
     private var parentActivity: BaseActivity? = null
 
@@ -32,8 +31,6 @@ abstract class BaseFragment() : Fragment(), MVPView {
     }
 
     fun getBaseActivity() = parentActivity
-
-    private fun test() = this
 
     private fun performDependencyInjection() = AndroidSupportInjection.inject(this)
 
