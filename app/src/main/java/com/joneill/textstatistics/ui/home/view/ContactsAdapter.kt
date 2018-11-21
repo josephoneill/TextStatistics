@@ -64,7 +64,7 @@ class ContactsAdapter(private val contactsList: MutableList<Contact>) : Recycler
             number?.let {
                 itemView.text_contact_number_card.text = it
             }
-            profileImage.let {
+            profileImage?.let {
                 itemView.image_contact_card.setImageBitmap(profileImage)
             }
         }
