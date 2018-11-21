@@ -2,6 +2,7 @@ package com.joneill.textstatistics.ui.home.view;
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -37,23 +38,13 @@ class ContactsAdapter(private val contactsList: MutableList<Contact>) : Recycler
         fun onBind(position: Int) {
             val contact = contactsList[position]
             inflateData(contact.name, contact.number, contact.profileImage)
-            //setItemClickListener(blogUrl)
+            setItemClickListener(contact)
         }
 
-        private fun setItemClickListener(blogUrl: String?) {
+        private fun setItemClickListener(contact: Contact) {
             itemView.setOnClickListener {
-                blogUrl?.let { it ->
-                    try {
-                        val intent = Intent()
-                        // using "with" as an example
-                        with(intent) {
-                            action = Intent.ACTION_VIEW
-                            data = Uri.parse(it)
-                            addCategory(Intent.CATEGORY_BROWSABLE)
-                        }
-                        itemView.context.startActivity(intent)
-                    } catch (e: Exception) {
-                    }
+                contact?.let { it ->
+
                 }
             }
         }
