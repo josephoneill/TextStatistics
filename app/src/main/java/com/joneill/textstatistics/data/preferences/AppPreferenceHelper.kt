@@ -6,10 +6,6 @@ import androidx.core.content.edit
 import com.joneill.textstatistics.di.PreferenceInfo
 import javax.inject.Inject
 
-/**
- * Created by janisharali on 25/12/16.
- */
-
 class AppPreferenceHelper @Inject constructor(context: Context,
                                               @PreferenceInfo private val prefFileName: String) : PreferenceHelper {
     private val mPrefs: SharedPreferences = context.getSharedPreferences(prefFileName, Context.MODE_PRIVATE)
