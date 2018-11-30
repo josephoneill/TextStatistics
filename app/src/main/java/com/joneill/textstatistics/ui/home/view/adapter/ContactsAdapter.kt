@@ -1,9 +1,6 @@
-package com.joneill.textstatistics.ui.home.view;
+package com.joneill.textstatistics.ui.home.view.adapter;
 
-import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +10,9 @@ import com.joneill.textstatistics.data.text.Contact
 import kotlinx.android.synthetic.main.contacts_list.view.*
 
 class ContactsAdapter(private val contactsList: MutableList<Contact>) : RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder>() {
+
+    var onRecyclerItemLongClickListener: OnContactItemClickListener? = null
+
     override fun getItemCount() = this.contactsList.size
 
     override fun onBindViewHolder(holder: ContactsViewHolder, position: Int) = holder.let {
@@ -20,12 +20,14 @@ class ContactsAdapter(private val contactsList: MutableList<Contact>) : Recycler
         it.onBind(position)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ContactsViewHolder(LayoutInflater.from(parent?.context)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ContactsViewHolder(LayoutInflater.from(parent.context)
             .inflate(R.layout.contacts_list, parent, false))
 
     internal fun addContactsToList(contact: List<Contact>) {
-        this.contactsList.addAll(contact)
-        notifyDataSetChanged()
+        if(!this.contactsList.containsAll(contact)) {
+            this.contactsList.addAll(contact)
+            notifyDataSetChanged()
+        }
     }
 
     inner class ContactsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -42,12 +44,13 @@ class ContactsAdapter(private val contactsList: MutableList<Contact>) : Recycler
         }
 
         private fun setItemClickListener(contact: Contact) {
-            itemView.setOnClickListener {
-                contact?.let { it ->
-
+            itemView.layout_contact_card_holder.setOnClickListener {
+                contact.let { it ->
+                    onRecyclerItemLongClickListener?.onItemClick(it)
                 }
             }
         }
+
         private fun inflateData(name: String?, number : String?, profileImage : Bitmap?) {
             name?.let {
                 itemView.text_contact_name_card.text = it
