@@ -2,9 +2,9 @@ package com.joneill.textstatistics.di.module
 
 import android.app.Application
 import android.content.Context
-import com.joneill.textstatistics.BuildConfig
 import com.joneill.textstatistics.data.preferences.AppPreferenceHelper
 import com.joneill.textstatistics.data.preferences.PreferenceHelper
+import com.joneill.textstatistics.data.repository.MessagesRepository
 import com.joneill.textstatistics.data.text.AppTextDataHelper
 import com.joneill.textstatistics.data.text.TextDataHelper
 import com.joneill.textstatistics.di.PreferenceInfo
@@ -30,5 +30,9 @@ class AppModule {
     @Provides
     @Singleton
     internal fun provideTextHelper(appTextDataHelper : AppTextDataHelper) : TextDataHelper = appTextDataHelper
+
+    @Provides
+    @Singleton
+    internal fun provideMessagesRepository(appTextDataHelper: AppTextDataHelper) : MessagesRepository = MessagesRepository(appTextDataHelper)
 
 }
