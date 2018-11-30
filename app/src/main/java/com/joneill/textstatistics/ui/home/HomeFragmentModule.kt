@@ -1,10 +1,9 @@
 package com.joneill.textstatistics.ui.home
 
-import android.content.Context
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joneill.textstatistics.ui.home.view.HomeFragment
 import com.joneill.textstatistics.ui.home.view.HomeMVPView
-import com.joneill.textstatistics.ui.home.view.ContactsAdapter
+import com.joneill.textstatistics.ui.home.view.adapter.ContactsAdapter
 import com.joneill.textstatistics.ui.main.interactor.HomeInteractor
 import com.joneill.textstatistics.ui.main.interactor.HomeMVPInteractor
 import com.joneill.textstatistics.ui.main.presenter.HomeMVPPresenter
