@@ -40,7 +40,8 @@ class MainActivity : BaseActivity(), MainMVPView, HasSupportFragmentInjector {
     }
 
     override fun onBackPressed() {
-
+        val fragmentManager = supportFragmentManager
+        fragmentManager.popBackStack()
     }
 
     override fun onDestroy() {

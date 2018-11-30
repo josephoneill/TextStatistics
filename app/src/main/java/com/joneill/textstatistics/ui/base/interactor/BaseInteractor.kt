@@ -1,15 +1,15 @@
 package com.joneill.textstatistics.ui.base.interactor
 
+import com.joneill.textstatistics.data.preferences.AppPreferenceHelper
 import com.joneill.textstatistics.data.preferences.PreferenceHelper
+import javax.inject.Inject
 
 open class BaseInteractor() : MVPInteractor {
 
     protected lateinit var preferenceHelper: PreferenceHelper
 
+    @Inject
     constructor(preferenceHelper: PreferenceHelper) : this() {
         this.preferenceHelper = preferenceHelper
     }
-
-    //override fun isUserLoggedIn() = this.preferenceHelper.getCurrentUserLoggedInMode() != AppConstants.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT.type
-
 }
