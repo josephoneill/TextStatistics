@@ -7,7 +7,7 @@ package com.joneill.textstatistics.data.preferences
 interface PreferenceHelper {
 
     fun getAccessToken(): String?
-
     fun setAccessToken(accessToken: String?)
-
+    fun getCurrentContact() : String?
+    fun setCurrentContact(contact : String?)
 }
