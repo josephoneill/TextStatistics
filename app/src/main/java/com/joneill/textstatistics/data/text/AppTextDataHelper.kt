@@ -6,8 +6,11 @@ import android.net.Uri
 import android.os.Build
 import android.provider.ContactsContract
 import android.provider.Telephony
-import android.util.Log
+import com.joneill.textstatistics.data.text.data.Contact
+import com.joneill.textstatistics.data.text.data.Message
 import com.joneill.textstatistics.util.CommonUtil
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 class AppTextDataHelper @Inject constructor(private val context: Context) : TextDataHelper {
@@ -23,17 +26,6 @@ class AppTextDataHelper @Inject constructor(private val context: Context) : Text
                 ContactsContract.Contacts.DISPLAY_NAME
     )
 
-    // Defines the text expression
-    @SuppressLint("InlinedApi")
-    private val SELECTION: String =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-                "${ContactsContract.Contacts.DISPLAY_NAME_PRIMARY} LIKE ?"
-            else
-                "${ContactsContract.Contacts.DISPLAY_NAME} LIKE ?"
-
-    // Defines a variable for the search string
-    private val mSearchString: String = ""
-
     private val contentResolver = context.contentResolver!!
 
     private val NUMBER_REGEX = Regex("\\D+")
@@ -41,11 +33,12 @@ class AppTextDataHelper @Inject constructor(private val context: Context) : Text
     /**
      * Get a list of all sms conversations
      * @param contacts the list of contacts to match the sender to
-     * @return a {@List<Text>} of all sms messages
+     * @return a {@code List<Text>} of all sms messages
      */
-    override fun getAllConversations(contacts : List<Contact>): List<Message> {
+    override fun getAllConversations(contacts: List<Contact>): List<Message> {
         val conversations = arrayListOf<Message>()
-        val projection = arrayOf(Telephony.Sms.Conversations._ID, Telephony.Sms.Conversations.BODY, Telephony.Sms.Conversations.ADDRESS)
+        val projection = arrayOf(Telephony.Sms.Conversations._ID, Telephony.Sms.Conversations.BODY, Telephony.Sms.Conversations.ADDRESS,
+                Telephony.Sms.Conversations.DATE)
         val uri = Uri.parse("content://mms-sms/complete-conversations")
         val cursor = contentResolver.query(uri, projection, null, null, null)
         try {
@@ -54,7 +47,9 @@ class AppTextDataHelper @Inject constructor(private val context: Context) : Text
                 var number = cursor.getString(cursor.getColumnIndex(Telephony.Sms.Conversations.ADDRESS))
                 number = number?.replace(NUMBER_REGEX, "")
                 val contact = getContactByNumber(contacts, number)
-                val message = Message(body, contact)
+                val date = cursor.getString(cursor.getColumnIndex(Telephony.Sms.Conversations.DATE)).toLong()
+                val message = Message(body, contact, Date(date))
+
                 conversations.add(message)
             }
         } finally {
@@ -66,12 +61,13 @@ class AppTextDataHelper @Inject constructor(private val context: Context) : Text
     /**
      * Filters a list of Contacts numbers to only those with names assigned
      * @param contacts the list of contacts to be filtered
-     * @return a {@List<Contact>?)} with non-contacts removed
+     * @return a {@code List<Contact>?)} with non-contacts removed
      */
     override fun filterCreatorsContactsOnly(contacts: List<Contact>?): List<Contact> {
         return contacts!!.filter { !it.name.isEmpty() }
     }
 
+    // TODO : Write Javadoc
     override fun getContacts(): List<Contact> {
         val contacts: MutableList<Contact> = mutableListOf()
         val cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, CONTACT_PROJECTION, null, null,
@@ -110,18 +106,64 @@ class AppTextDataHelper @Inject constructor(private val context: Context) : Text
     }
 
     /**
-     * Finds the {@Contact} object with the associated number
+     * Finds the {@link Contact} object with the associated number
      * @param contacts the list of contacts to be filtered
-     * @param number the number of the {@Contact} to find
-     * @return the {@Contact} object that contains the associated number
+     * @param number the number of the {@link Contact} to find
+     * @return the {@link Contact} object that contains the associated number
      */
-    override fun getContactByNumber(contacts: List<Contact>, number: String?): Contact? = contacts.find {it.number == number}
+    override fun getContactByNumber(contacts: List<Contact>, number: String?): Contact? = contacts.find { it.number == number }
 
     /**
-     * Gets a list of all {@Message} objects linked to the {@Contact} param
+     * Gets a list of all {@link Message} objects linked to the {@Contact} param
      * @param messages the list of messages to be filtered
      * @param contact the {@Contact} to filter by
      * @return a {@List<Message>} object that contains the messages linked to the {@Contact}
      */
-    override fun getMessagesByContact(messages: List<Message>, contact: Contact?) = messages.filter {it.contact?.number == contact?.number}
+    override fun getMessagesByContact(messages: List<Message>, contact: Contact?) = messages.filter { it.contact?.number == contact?.number }
+
+    /**
+     * Gets a list of {@link Message} objects that correspond to a given date
+     * @param messages the list of messages to be searched
+     * @param date the Date to filter by
+     * @return a {@code List<Message>} object that contains the messages corresponding to the given date
+     */
+    override fun getMessagesByDate(messages: List<Message>, date: Date): List<Message> = messages.filter { CommonUtil.getFormattedDate(it.date) == CommonUtil.getFormattedDate(date) }
+
+    /**
+     * Gets the count of {@link Message} objects that correspond to a given date
+     * @param messages the list of messages to be searched
+     * @param date the Date to filter by
+     * @return an Int value of the number of messages on the given date
+     */
+    override fun getMessageCountOnDate(messages: List<Message>, date: Date): Int = messages.count { CommonUtil.getFormattedDate(it.date) == CommonUtil.getFormattedDate(date) }
+
+    /**
+     * Gets the count of {@link Message} objects for each date in the messages list
+     * @param messages the list of messages to be searched
+     * @return a {@code Map<String, Int>} where the key is the Date of the message
+     *         and the value is the count
+     */
+    override fun getMessageCountByDate(messages: List<Message>): Map<String, Int> {
+        var map : MutableMap<String, Int> = mutableMapOf()
+
+        for(m : Message in messages) {
+            val date = SimpleDateFormat("MM/dd").format(m.date)
+            if(map.containsKey(date)) {
+                map[date] = map[date]!! + 1
+            } else {
+                map[date] = 1
+            }
+        }
+
+        return map
+    }
+
+    /**
+     * Gets a list of {@link Message} objects that fall within a given date range
+     * @param messages the list of messages to be searched
+     * @param startDate the start Date to filter by
+     * @param endDate the end Date to filter by
+     * @return a {@code List<Message>} object that contains the messages within the given date range
+     */
+    override fun getMessagesInDateRange(messages: List<Message>, startDate: Date, endDate: Date): List<Message> = messages.filter { !(it.date.before(startDate) || it.date.after(endDate)) }
 }
