@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.joneill.textstatistics.R
-import com.joneill.textstatistics.data.text.Contact
+import com.joneill.textstatistics.data.text.data.Contact
 import kotlinx.android.synthetic.main.contacts_list.view.*
 
 class ContactsAdapter(private val contactsList: MutableList<Contact>) : RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder>() {
