@@ -45,6 +45,8 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.16'
     kapt 'com.google.dagger:dagger-android-processor:2.16'
 
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
+
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
@@ -59,6 +61,7 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:28.1'
     implementation 'com.android.support:appcompat-v7:28.1'
     implementation 'com.android.support:design:28.1'
+    implementation 'com.android.support:gridlayout-v7:28.1'
 
     implementation 'com.google.code.gson:gson:2.8.5'
 
