@@ -1,8 +1,7 @@
 package com.joneill.textstatistics.ui.main.presenter
 
-import android.util.Log
 import com.google.gson.Gson
-import com.joneill.textstatistics.data.text.Contact
+import com.joneill.textstatistics.data.text.data.Contact
 import com.joneill.textstatistics.ui.base.presenter.BasePresenter
 import com.joneill.textstatistics.ui.home.view.ContactDataMVPView
 import com.joneill.textstatistics.ui.main.interactor.ContactDataMVPInteractor
@@ -21,7 +20,9 @@ open class ContactDataPresenter<V : ContactDataMVPView, I : ContactDataMVPIntera
     }
 
     private fun getMessages(contact : Contact) = interactor?.let { it ->
-        val messages = it.getMessagesByContact(contact)
+        var messages = it.getMessages()
+        messages = it.getMessagesByContact(messages, contact)
+        //messages = it.getMessagesInDateRange(messages, Date(System.currentTimeMillis() - 7L * 24 * 3600 * 1000), Date(System.currentTimeMillis()))
         getView()?.displayMessagesList(messages)
     }
 }
