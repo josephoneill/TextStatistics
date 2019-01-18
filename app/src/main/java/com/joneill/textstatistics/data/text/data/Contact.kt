@@ -1,4 +1,4 @@
-package com.joneill.textstatistics.data.text
+package com.joneill.textstatistics.data.text.data
 
 import android.graphics.Bitmap
 import android.os.Parcelable
