@@ -1,7 +1,7 @@
-package com.joneill.textstatistics.ui.ContactData
+package com.joneill.textstatistics.ui.contactdata
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.joneill.textstatistics.ui.home.view.ContactDataAdapter
+import com.joneill.textstatistics.ui.contactdata.view.ContactDataAdapter
 import com.joneill.textstatistics.ui.home.view.ContactDataFragment
 import com.joneill.textstatistics.ui.home.view.ContactDataMVPView
 import com.joneill.textstatistics.ui.main.interactor.ContactDataInteractor

@@ -1,9 +1,7 @@
-package com.joneill.textstatistics.ui.home
+package com.joneill.textstatistics.ui.contactdata
 
-import com.joneill.textstatistics.ui.ContactData.ContactDataFragmentModule
-import com.joneill.textstatistics.ui.ContactData.`ContactDataFragmentModule_ProvideContactDataInteractor$app_debugFactory`
+import com.joneill.textstatistics.ui.contactdata.ContactDataFragmentModule
 import com.joneill.textstatistics.ui.home.view.ContactDataFragment
-import com.joneill.textstatistics.ui.home.view.HomeFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
