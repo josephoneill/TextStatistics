@@ -7,6 +7,8 @@ import android.provider.ContactsContract
 import android.graphics.BitmapFactory
 import android.content.ContentUris
 import java.io.ByteArrayInputStream
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 object CommonUtil {
@@ -43,6 +45,12 @@ object CommonUtil {
             cursor.close()
         }
         return null
-
     }
+
+    fun getFormattedDate(date : Date) : String {
+        val fmt = SimpleDateFormat("yyyyMMdd")
+        return fmt.format(date)
+    }
+
+    fun getDateXDaysAgo(x : Long) : Date = Date(System.currentTimeMillis() - x * 24 * 3600 * 1000)
 }
