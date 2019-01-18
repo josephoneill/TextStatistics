@@ -1,6 +1,6 @@
 package com.joneill.textstatistics.di.builder
 
-import com.joneill.textstatistics.ui.home.ContactDataFragmentProvider
+import com.joneill.textstatistics.ui.contactdata.ContactDataFragmentProvider
 import com.joneill.textstatistics.ui.home.HomeFragmentProvider
 import com.joneill.textstatistics.ui.main.MainActivityModule
 import com.joneill.textstatistics.ui.main.view.MainActivity
