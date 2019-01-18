@@ -8,8 +8,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joneill.textstatistics.R
-import com.joneill.textstatistics.data.text.Message
+import com.joneill.textstatistics.data.text.data.Message
 import com.joneill.textstatistics.ui.base.view.BaseFragment
+import com.joneill.textstatistics.ui.contactdata.view.ContactDataAdapter
 import com.joneill.textstatistics.ui.main.interactor.ContactDataMVPInteractor
 import com.joneill.textstatistics.ui.main.presenter.ContactDataMVPPresenter
 import kotlinx.android.synthetic.main.fragment_contact_data.*
@@ -18,10 +19,6 @@ import javax.inject.Provider
 
 
 class ContactDataFragment : BaseFragment(), ContactDataMVPView {
-
-    companion object {
-        const val CONTACT_KEY_MESSAGES = "com.joneill.textstatistics.KEY_CONTACT_MESSAGES"
-    }
 
     @Inject
     internal lateinit var contactDataAdapter: ContactDataAdapter

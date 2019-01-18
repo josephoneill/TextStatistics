@@ -1,12 +1,11 @@
-package com.joneill.textstatistics.ui.home.view;
+package com.joneill.textstatistics.ui.contactdata.view
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.joneill.textstatistics.R
-import com.joneill.textstatistics.data.text.Message
+import com.joneill.textstatistics.data.text.data.Message
 import kotlinx.android.synthetic.main.contact_data_list.view.*
 
 class ContactDataAdapter(private val messagesList: MutableList<Message>) : RecyclerView.Adapter<ContactDataAdapter.ContactsViewHolder>() {
@@ -34,7 +33,7 @@ class ContactDataAdapter(private val messagesList: MutableList<Message>) : Recyc
 
         fun onBind(position: Int) {
             val message = messagesList[position]
-            inflateData(message.data + ", " + message.contact?.name)
+            inflateData(message.data)
             setItemClickListener(message)
         }
 
