@@ -9,6 +9,11 @@ import android.content.ContentUris
 import java.io.ByteArrayInputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import android.R.attr.data
+import android.R
+import android.util.TypedValue
+
+
 
 
 object CommonUtil {
@@ -34,15 +39,13 @@ object CommonUtil {
         val photoUri = Uri.withAppendedPath(contactUri, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY)
         val cursor = context!!.contentResolver.query(photoUri,
                 arrayOf(ContactsContract.Contacts.Photo.PHOTO), null, null, null) ?: return null
-        try {
+        cursor.use {
             if (cursor.moveToFirst()) {
                 val data = cursor.getBlob(0)
                 if (data != null) {
                     return BitmapFactory.decodeStream(ByteArrayInputStream(data))
                 }
             }
-        } finally {
-            cursor.close()
         }
         return null
     }
@@ -53,4 +56,10 @@ object CommonUtil {
     }
 
     fun getDateXDaysAgo(x : Long) : Date = Date(System.currentTimeMillis() - x * 24 * 3600 * 1000)
+
+    fun getAttributeColor(attr : Int, context: Context?): Int {
+        val value = TypedValue()
+        context?.theme?.resolveAttribute(attr, value, true)
+        return value.data
+    }
 }
