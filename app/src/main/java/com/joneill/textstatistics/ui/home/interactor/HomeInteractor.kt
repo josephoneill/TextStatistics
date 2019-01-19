@@ -11,7 +11,7 @@ import com.joneill.textstatistics.data.text.data.Message
 import java.util.*
 
 
-class HomeInteractor @Inject internal constructor(preferenceHelper: PreferenceHelper, context : Context, private val textDataHelper: AppTextDataHelper, private val messagesRepository: MessagesRepository) : BaseInteractor(preferenceHelper = preferenceHelper), HomeMVPInteractor {
+class HomeInteractor @Inject internal constructor(preferenceHelper: PreferenceHelper, private val textDataHelper: AppTextDataHelper, private val messagesRepository: MessagesRepository) : BaseInteractor(preferenceHelper = preferenceHelper), HomeMVPInteractor {
     override fun loadData() = messagesRepository.loadData()
 
     override fun getContacts(): List<Contact> = messagesRepository.contacts
