@@ -26,7 +26,8 @@ import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.data.LineData
 import com.google.android.material.tabs.TabLayout
-
+import com.joneill.textstatistics.util.CommonUtil
+import com.joneill.textstatistics.R.attr.*
 
 
 class HomeFragment : BaseFragment(), HomeMVPView {
@@ -74,7 +75,7 @@ class HomeFragment : BaseFragment(), HomeMVPView {
         val fragment = ContactDataFragment()
         val transaction : FragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
 
-        transaction.replace(R.id.frame_home_fragment_container, fragment)
+        transaction.replace(R.id.main_fragment_container, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }
@@ -97,19 +98,20 @@ class HomeFragment : BaseFragment(), HomeMVPView {
             days[value.toInt()]
         }
 
-        val materialRed = ResourcesCompat.getColor(resources, R.color.materialPrimaryRed, null)
+        val accent = CommonUtil.getAttributeColor(R.attr.colorAccent, context)
+        val textColor = CommonUtil.getAttributeColor(R.attr.colorText, context)
         val dataSet = LineDataSet(entries, "") // add entries to dataset
-        dataSet.color = materialRed
+        dataSet.color = accent
         dataSet.setDrawValues(false)
         dataSet.lineWidth = 4.0f
         dataSet.circleRadius = 0.01f
         dataSet.circleColors = mutableListOf(Color.TRANSPARENT)
-        dataSet.circleHoleColor = materialRed
+        dataSet.circleHoleColor = accent
 
         val lineData = LineData(dataSet)
 
         //Themeing
-        mLineChart.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.colorPrimary, null))
+        mLineChart.setBackgroundColor(CommonUtil.getAttributeColor(com.joneill.textstatistics.R.attr.cardBackgroundColor, context))
         mLineChart.setDrawGridBackground(false)
         mLineChart.setDrawBorders(false)
         mLineChart.description.isEnabled = false
@@ -117,22 +119,24 @@ class HomeFragment : BaseFragment(), HomeMVPView {
         mLineChart.xAxis.granularity = 1f // minimum axis-step (interval) is 1
         mLineChart.xAxis.valueFormatter = formatter
         mLineChart.xAxis.setDrawGridLines(false)
-        mLineChart.xAxis.textColor = Color.WHITE
+        mLineChart.xAxis.textColor = textColor
         mLineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
         mLineChart.xAxis.spaceMin = 0.3f
         mLineChart.xAxis.spaceMax = 0.3f
         mLineChart.axisRight.setDrawAxisLine(false)
         mLineChart.axisRight.setDrawLabels(false)
         mLineChart.axisRight.setDrawGridLines(false)
-        mLineChart.axisRight.textColor = Color.WHITE
+        mLineChart.axisRight.textColor = textColor
         mLineChart.axisLeft.setDrawAxisLine(false)
-        mLineChart.axisLeft.textColor = Color.WHITE
+        mLineChart.axisLeft.textColor = textColor
         mLineChart.axisLeft.setDrawGridLines(false)
+        mLineChart.setTouchEnabled(false)
+        mLineChart.setPinchZoom(false)
         mLineChart.extraBottomOffset = 15.0f
         if(animateX) {
             mLineChart.animateX(1000)
         } else {
-            mLineChart.animateY(1000)
+            mLineChart.animateY(700)
         }
         mLineChart.data = lineData
         mLineChart.invalidate() // refresh
