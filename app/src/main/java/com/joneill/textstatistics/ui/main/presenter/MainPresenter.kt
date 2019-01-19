@@ -13,10 +13,6 @@ import javax.inject.Inject
 
 class MainPresenter<V : MainMVPView, I : MainMVPInteractor> @Inject internal constructor(interactor: I) : BasePresenter<V, I>(interactor = interactor), MainMVPPresenter<V, I> {
 
-    override fun onDrawerOptionAboutClick(): Unit? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun onAttach(view: V?) {
         super.onAttach(view)
         requestPermissions()
@@ -45,8 +41,16 @@ class MainPresenter<V : MainMVPView, I : MainMVPInteractor> @Inject internal con
     }
 
     override fun onPermissionsResult() {
-        getView()!!.loadHomeFragment()
-        //getConversations()
+        getView()?.loadHomeFragment()
     }
+
+    override fun onSettingsMenuClicked() {
+        getView()?.loadSettingsFragment()
+    }
+
+    override fun getCustomTheme() {
+        getView()?.setCustomTheme(interactor?.getIsDarkTheme()!!)
+    }
+
 
 }

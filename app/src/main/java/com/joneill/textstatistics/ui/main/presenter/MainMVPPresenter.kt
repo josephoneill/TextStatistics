@@ -5,7 +5,8 @@ import com.joneill.textstatistics.ui.main.interactor.MainMVPInteractor
 import com.joneill.textstatistics.ui.main.view.MainMVPView
 
 interface MainMVPPresenter<V : MainMVPView, I : MainMVPInteractor> : MVPPresenter<V, I> {
-    fun onDrawerOptionAboutClick() : Unit?
     fun requestPermissions()
     fun onPermissionsResult()
+    fun onSettingsMenuClicked()
+    fun getCustomTheme()
 }
