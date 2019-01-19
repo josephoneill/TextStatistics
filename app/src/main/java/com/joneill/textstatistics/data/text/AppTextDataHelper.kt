@@ -67,7 +67,10 @@ class AppTextDataHelper @Inject constructor(private val context: Context) : Text
         return contacts!!.filter { !it.name.isEmpty() }
     }
 
-    // TODO : Write Javadoc
+    /**
+     * Gets a list of the Contacts saved on the phone
+     * @return a {@code List<Contact>} of all of the Contacts on the phone
+     */
     override fun getContacts(): List<Contact> {
         val contacts: MutableList<Contact> = mutableListOf()
         val cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, CONTACT_PROJECTION, null, null,
