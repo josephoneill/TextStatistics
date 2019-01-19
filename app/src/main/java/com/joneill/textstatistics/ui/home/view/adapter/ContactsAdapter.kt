@@ -45,7 +45,7 @@ class ContactsAdapter(private val contactsList: MutableList<Contact>) : Recycler
 
         private fun setItemClickListener(contact: Contact) {
             itemView.layout_contact_card_holder.setOnClickListener {
-                contact.let { it ->
+                contact.let {
                     onRecyclerItemLongClickListener?.onItemClick(it)
                 }
             }
