@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
+
+    <string name="key_dark_mode_enabled">dark_mode_enabled</string>
+    <string name="key_current_contact">current_contact</string>
+</resources>
