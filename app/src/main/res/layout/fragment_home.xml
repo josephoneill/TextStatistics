@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorDarkBackground"
+    android:background="?colorBackground"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ProgressBar
@@ -17,17 +17,19 @@
         android:layout_centerInParent="true"
         tools:visibility="visible" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/home_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorDarkBackground"
+        android:background="?colorBackground"
         android:fillViewport="true"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            >
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/home_chart_card"
@@ -37,10 +39,10 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
-                android:background="@color/colorPrimary"
                 android:orientation="vertical"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
+                app:cardBackgroundColor="?colorCardBackground"
                 app:cardElevation="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -51,7 +53,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/colorPrimary"
+                    android:background="?colorCardBackground"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -66,7 +68,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="TITLE"
-                            android:textColor="@color/white"
+                            android:textColor="?colorText"
                             android:textSize="18dp"
                             android:textStyle="bold" />
 
@@ -76,7 +78,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="VALUE"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="?colorAccent"
                             android:textSize="20dp" />
 
                     </LinearLayout>
@@ -94,8 +96,8 @@
                         android:id="@+id/home_card_tabs"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:tabSelectedTextColor="@color/white"
-                        app:tabTextColor="@color/text_silver">
+                        app:tabSelectedTextColor="?colorText"
+                        app:tabTextColor="?colorTextAccent">
 
                         <com.google.android.material.tabs.TabItem
                             android:layout_width="match_parent"
@@ -113,13 +115,40 @@
 
             </androidx.cardview.widget.CardView>
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/test"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                app:cardBackgroundColor="?colorCardBackground"
+                app:cardElevation="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/home_chart_card"
+                app:layout_constraintVertical_bias="0.0">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?colorCardBackground"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/home_recycler_view"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="500dp"
                 android:layout_marginTop="8dp"
                 android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_chart_card"
@@ -129,23 +158,22 @@
 
             <GridLayout
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:columnCount="2"
                 android:orientation="horizontal"
                 android:paddingLeft="8dp"
                 android:paddingTop="16dp"
+                android:paddingBottom="8dp"
                 android:rowCount="1"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_chart_card">
+                app:layout_constraintTop_toBottomOf="@+id/test">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="193dp"
                     android:layout_height="193dp"
-                    android:background="@color/colorPrimary"
                     android:orientation="vertical"
-                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardBackgroundColor="?colorCardBackground"
                     app:cardElevation="4dp">
 
                     <LinearLayout
@@ -159,7 +187,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="TITLE"
-                            android:textColor="@color/white"
+                            android:textColor="?colorText"
                             android:textSize="18dp"
                             android:textStyle="bold" />
 
@@ -168,7 +196,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="44"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="?colorText"
                             android:textSize="20dp" />
 
                     </LinearLayout>
@@ -179,9 +207,8 @@
                     android:layout_width="193dp"
                     android:layout_height="193dp"
                     android:layout_marginLeft="8dp"
-                    android:background="@color/colorPrimary"
                     android:orientation="vertical"
-                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardBackgroundColor="?colorCardBackground"
                     app:cardElevation="4dp">
 
                     <LinearLayout
@@ -195,7 +222,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="TITLE"
-                            android:textColor="@color/white"
+                            android:textColor="?colorText"
                             android:textSize="18dp"
                             android:textStyle="bold" />
 
@@ -204,12 +231,12 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="44"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="?colorText"
                             android:textSize="20dp" />
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </GridLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </RelativeLayout>

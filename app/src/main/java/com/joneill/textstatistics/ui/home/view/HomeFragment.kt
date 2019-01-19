@@ -66,8 +66,7 @@ class HomeFragment : BaseFragment(), HomeMVPView {
 
     override fun displayContactsList(contacts: List<Contact>?) = contacts?.let {
         contactsAdapter.addContactsToList(it)
-        //home_recycler_view.visibility = View.VISIBLE
-        home_scroll_view.visibility = View.VISIBLE;
+        home_scroll_view.visibility = View.VISIBLE
         home_progress_bar.visibility = View.GONE
     }
 
