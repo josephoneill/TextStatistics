@@ -39,7 +39,7 @@ class ContactDataAdapter(private val messagesList: MutableList<Message>) : Recyc
 
         private fun setItemClickListener(message: Message) {
             itemView.layout_contact_data_card_holder.setOnClickListener {
-                message.let { it ->
+                message.let {
 
                 }
             }
