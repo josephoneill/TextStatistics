@@ -7,8 +7,10 @@ import android.content.Context
 import com.joneill.textstatistics.data.text.TextDataHelper
 
 
-class MainInteractor @Inject internal constructor(preferenceHelper: PreferenceHelper, context : Context, private val textDataHelper : TextDataHelper) : BaseInteractor(preferenceHelper = preferenceHelper), MainMVPInteractor {
+class MainInteractor @Inject internal constructor(preferenceHelper: PreferenceHelper, private val textDataHelper : TextDataHelper) : BaseInteractor(preferenceHelper = preferenceHelper), MainMVPInteractor {
 
     /*override fun getUserDetails() = Pair(preferenceHelper.getCurrentUserName(),
             preferenceHelper.getCurrentUserEmail())*/
+
+    override fun getIsDarkTheme(): Boolean = preferenceHelper.getIsDarkTheme()
 }
