@@ -1,8 +1,6 @@
 package com.joneill.textstatistics.ui.main.view
 
-import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -30,6 +28,9 @@ class MainActivity : BaseActivity(), MainMVPView, HasSupportFragmentInjector {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         presenter.onAttach(this)
+        if(savedInstanceState == null) {
+            presenter.requestPermissions()
+        }
         loadTheme()
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
@@ -98,12 +99,9 @@ class MainActivity : BaseActivity(), MainMVPView, HasSupportFragmentInjector {
     }
 
     override fun setCustomTheme(isDarkTheme: Boolean) {
-        Log.e("Ran", "joneill running running ran");
         if(isDarkTheme) {
-            Log.e("joneill ", "joneill let use dark")
             setTheme(R.style.AppTheme)
         } else {
-            Log.e("joneill ", "joneill lets not use dark")
             setTheme(R.style.LightTheme)
         }
     }
