@@ -1,4 +1,4 @@
-package com.joneill.textstatistics.ui.home.view.adapter;
+package com.joneill.textstatistics.ui.home.view.adapter
 
 import android.graphics.Bitmap
 import android.view.LayoutInflater
@@ -7,7 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.joneill.textstatistics.R
 import com.joneill.textstatistics.data.text.data.Contact
-import kotlinx.android.synthetic.main.contacts_list.view.*
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.contacts_list.*
 
 class ContactsAdapter(private val contactsList: MutableList<Contact>) : RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder>() {
 
@@ -24,17 +25,20 @@ class ContactsAdapter(private val contactsList: MutableList<Contact>) : Recycler
             .inflate(R.layout.contacts_list, parent, false))
 
     internal fun addContactsToList(contact: List<Contact>) {
-        if(!this.contactsList.containsAll(contact)) {
+        if (!this.contactsList.containsAll(contact)) {
             this.contactsList.addAll(contact)
             notifyDataSetChanged()
         }
     }
 
-    inner class ContactsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ContactsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), LayoutContainer {
+
+        override val containerView: View?
+            get() = itemView
 
         fun clear() {
-            itemView.text_contact_name_card.text = ""
-            itemView.text_contact_number_card.text = ""
+            text_contact_name_card.text = ""
+            text_contact_number_card.text = ""
         }
 
         fun onBind(position: Int) {
@@ -44,22 +48,22 @@ class ContactsAdapter(private val contactsList: MutableList<Contact>) : Recycler
         }
 
         private fun setItemClickListener(contact: Contact) {
-            itemView.layout_contact_card_holder.setOnClickListener {
+            layout_contact_card_holder.setOnClickListener {
                 contact.let {
                     onRecyclerItemLongClickListener?.onItemClick(it)
                 }
             }
         }
 
-        private fun inflateData(name: String?, number : String?, profileImage : Bitmap?) {
+        private fun inflateData(name: String?, number: String?, profileImage: Bitmap?) {
             name?.let {
-                itemView.text_contact_name_card.text = it
+                text_contact_name_card.text = it
             }
             number?.let {
-                itemView.text_contact_number_card.text = it
+                text_contact_number_card.text = it
             }
             profileImage?.let {
-                itemView.image_contact_card.setImageBitmap(profileImage)
+                image_contact_card.setImageBitmap(profileImage)
             }
         }
     }
