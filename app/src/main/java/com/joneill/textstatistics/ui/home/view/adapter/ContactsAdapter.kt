@@ -28,7 +28,7 @@ class ContactsAdapter(private val contactsList: MutableList<Contact>) : Recycler
         if (!this.contactsList.containsAll(contact)) {
             this.contactsList.addAll(contact)
             notifyDataSetChanged()
-        } 
+        }
     }
 
     inner class ContactsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), LayoutContainer {
