@@ -10,6 +10,7 @@
         <item name="colorCardBackground">@color/colorPrimary</item>
         <item name="colorText">@color/white</item>
         <item name="colorTextAccent">@color/text_silver</item>
+        <item name="android:windowAnimationStyle">@style/WindowFadeTransition</item>
     </style>
 
     <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -20,6 +21,12 @@
         <item name="colorCardBackground">@color/white</item>
         <item name="colorText">@color/black</item>
         <item name="colorTextAccent">@color/text_silver</item>
+        <item name="android:windowAnimationStyle">@style/WindowFadeTransition</item>
+    </style>
+
+    <style name="WindowFadeTransition" parent="android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
 </resources>
