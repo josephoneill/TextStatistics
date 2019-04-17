@@ -27,10 +27,11 @@ open class HomePresenter<V : HomeMVPView, I : HomeMVPInteractor> @Inject interna
         })
     }
 
-    private fun onDataLoaded() = interactor?.let { it ->
-        val contacts = it.getContacts()
-        getView()?.displayContactsList(contacts)
+    private fun onDataLoaded() = interactor?.let { 
+        getView()?.showDashboard()
 
+        val msgs = it.getMessagesInDateRange(it.getMessages(), CommonUtil.getDateXDaysAgo(30), Date(System.currentTimeMillis()))
+        getView()?.displayTopContactsList(it.getContactsSortedByMessageCount(msgs).filter{it.first != null}.take(5))
         loadChart("Texts Sent (Weekly)", 7, false)
     }
 
