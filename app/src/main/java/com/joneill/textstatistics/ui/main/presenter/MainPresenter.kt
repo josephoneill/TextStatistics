@@ -15,7 +15,6 @@ class MainPresenter<V : MainMVPView, I : MainMVPInteractor> @Inject internal con
 
     override fun onAttach(view: V?) {
         super.onAttach(view)
-        requestPermissions()
     }
 
     override fun requestPermissions() {
