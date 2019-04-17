@@ -7,6 +7,8 @@ import com.joneill.textstatistics.ui.base.view.MVPView
 
 interface HomeMVPView : MVPView {
     fun displayContactsList(contacts: List<Contact>?) : Unit?
-    fun showChartCard(title : String, value : String, dataList: List<Pair<String, Entry>>, animateX : Boolean)
+    fun displayTopContactsList(list : List<Pair<Contact?, Int>>)
+    fun showDashboard()
+    fun showChartCard(title : String, dataValue : String, dataList: List<Pair<String, Entry>>, animateX : Boolean)
     fun openContactDataFragment(contact : Contact)
 }
