@@ -9,20 +9,15 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:orientation="vertical"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="1dp">
+        android:background="?attr/colorCardBackground"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/layout_contact_card_holder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:foreground="?attr/selectableItemBackground"
             android:clickable="true"
+            android:background="?attr/colorCardBackground"
             android:orientation="horizontal">
 
             <ImageView
@@ -45,8 +40,9 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="16dp"
-                    android:textColor="#000000"
+                    android:textColor="?colorText"
                     android:textSize="16dp"
+                    android:text="AHAHAH"
                     tools:text="Contact Name" />
 
                 <TextView
@@ -56,6 +52,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="4dp"
+                    android:textColor="?colorText"
                     android:textSize="12dp"
                     tools:text="Phone Number" />
 
