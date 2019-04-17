@@ -36,7 +36,7 @@ class HomeFragment : BaseFragment(), HomeMVPView {
     @Inject
     internal lateinit var presenter: HomeMVPPresenter<HomeMVPView, HomeMVPInteractor>
     @Inject
-    internal lateinit var topContactsPresenter : TopContactsMVPPresenter<TopContactsMVPView, HomeMVPInteractor>
+    internal lateinit var topContactsPresenter: TopContactsMVPPresenter<TopContactsMVPView, HomeMVPInteractor>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
@@ -78,16 +78,16 @@ class HomeFragment : BaseFragment(), HomeMVPView {
         topContactsAdapter.setContactsList(list)
     }
 
-    override fun openContactDataFragment(contact : Contact) {
+    override fun openContactDataFragment(contact: Contact) {
         val fragment = ContactDataFragment()
-        val transaction : FragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+        val transaction: FragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
 
         transaction.replace(R.id.main_fragment_container, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }
 
-    override fun showChartCard(title : String, dataValue : String, dataList: List<Pair<String, Entry>>, animateX : Boolean) {
+    override fun showChartCard(title: String, dataValue: String, dataList: List<Pair<String, Entry>>, animateX: Boolean) {
         //Set card info
         tv_home_chart_title.text = title
         tv_home_chart_value.text = dataValue
@@ -102,7 +102,8 @@ class HomeFragment : BaseFragment(), HomeMVPView {
             entries.add(data.second)
         }
 
-        val formatter = IAxisValueFormatter { value, _ -> // we don't draw numbers, so no decimal digits needed
+        val formatter = IAxisValueFormatter { value, _ ->
+            // we don't draw numbers, so no decimal digits needed
             days[value.toInt()]
         }
 
@@ -141,7 +142,7 @@ class HomeFragment : BaseFragment(), HomeMVPView {
         mLineChart.setTouchEnabled(false)
         mLineChart.setPinchZoom(false)
         mLineChart.extraBottomOffset = 15.0f
-        if(animateX) {
+        if (animateX) {
             mLineChart.animateX(1000)
         } else {
             mLineChart.animateY(700)
