@@ -169,4 +169,20 @@ class AppTextDataHelper @Inject constructor(private val context: Context) : Text
      * @return a {@code List<Message>} object that contains the messages within the given date range
      */
     override fun getMessagesInDateRange(messages: List<Message>, startDate: Date, endDate: Date): List<Message> = messages.filter { !(it.date.before(startDate) || it.date.after(endDate)) }
+
+    override fun getContactsSortedByMessageCount(messages: List<Message>): List<Pair<Contact?, Int>> {
+        var map : MutableMap<Contact?, Int> = mutableMapOf()
+        var list: List<Pair<Contact?, Int>>
+        for (m : Message in messages) {
+            if(map.containsKey(m.contact)) {
+                map[m.contact] = map[m.contact]!!+1
+            } else {
+                map[m.contact] = 1
+            }
+        }
+
+        list = map.toList()
+        list.sortedWith(compareBy {it.second})
+        return list
+    }
 }

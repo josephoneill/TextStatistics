@@ -14,4 +14,5 @@ interface TextDataHelper {
     fun getMessageCountOnDate(messages : List<Message>, date : Date) : Int
     fun getMessageCountByDate(messages : List<Message>) : Map<String, Int>
     fun getMessagesInDateRange(messages : List<Message>, startDate : Date, endDate : Date) : List<Message>
+    fun getContactsSortedByMessageCount(messages : List<Message>) : List<Pair<Contact?, Int>>
 }
