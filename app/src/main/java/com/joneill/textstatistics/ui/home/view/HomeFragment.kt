@@ -11,8 +11,6 @@ import com.github.mikephil.charting.data.Entry
 import com.joneill.textstatistics.R
 import com.joneill.textstatistics.data.text.data.Contact
 import com.joneill.textstatistics.ui.base.view.BaseFragment
-import com.joneill.textstatistics.ui.home.view.adapter.ContactsAdapter
-import com.joneill.textstatistics.ui.home.view.adapter.OnContactItemClickListener
 import com.joneill.textstatistics.ui.main.interactor.HomeMVPInteractor
 import com.joneill.textstatistics.ui.main.presenter.HomeMVPPresenter
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -21,23 +19,24 @@ import javax.inject.Provider
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import android.graphics.Color
-import androidx.core.content.res.ResourcesCompat
-import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.data.LineData
 import com.google.android.material.tabs.TabLayout
+import com.joneill.textstatistics.ui.home.presenter.adapter.TopContactsMVPPresenter
+import com.joneill.textstatistics.ui.home.view.adapter.TopContactsAdapter
+import com.joneill.textstatistics.ui.home.view.adapter.TopContactsMVPView
 import com.joneill.textstatistics.util.CommonUtil
-import com.joneill.textstatistics.R.attr.*
 
 
 class HomeFragment : BaseFragment(), HomeMVPView {
-
     @Inject
-    internal lateinit var contactsAdapter: ContactsAdapter
+    internal lateinit var topContactsAdapter: TopContactsAdapter
     @Inject
     internal lateinit var layoutManager: Provider<LinearLayoutManager>
     @Inject
     internal lateinit var presenter: HomeMVPPresenter<HomeMVPView, HomeMVPInteractor>
+    @Inject
+    internal lateinit var topContactsPresenter : TopContactsMVPPresenter<TopContactsMVPView, HomeMVPInteractor>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
@@ -49,15 +48,22 @@ class HomeFragment : BaseFragment(), HomeMVPView {
         super.onViewCreated(view, savedInstanceState)
     }
 
+    override fun showDashboard() {
+        home_scroll_view?.visibility = View.VISIBLE
+        home_progress_bar?.visibility = View.GONE
+    }
+
     override fun setUp() {
-        contactsAdapter.onRecyclerItemLongClickListener = object : OnContactItemClickListener {
+        /*contactsAdapter.onRecyclerItemLongClickListener = object : OnContactItemClickListener {
             override fun onItemClick(contact : Contact) {
                 presenter.onContactItemClick(contact)
             }
-        }
-        home_recycler_view.layoutManager = layoutManager.get()
-        home_recycler_view.itemAnimator = DefaultItemAnimator()
-        home_recycler_view.adapter = contactsAdapter
+        }*/
+        topContactsAdapter.setPresenter(topContactsPresenter)
+
+        contacts_recycler_view.layoutManager = layoutManager.get()
+        contacts_recycler_view.itemAnimator = DefaultItemAnimator()
+        contacts_recycler_view.adapter = topContactsAdapter
 
         activity?.actionBar?.title = "Home"
         setListeners()
@@ -65,9 +71,11 @@ class HomeFragment : BaseFragment(), HomeMVPView {
     }
 
     override fun displayContactsList(contacts: List<Contact>?) = contacts?.let {
-        contactsAdapter.addContactsToList(it)
-        home_scroll_view.visibility = View.VISIBLE
-        home_progress_bar.visibility = View.GONE
+        //topContactsAdapter.setContactsList(list)
+    }
+
+    override fun displayTopContactsList(list: List<Pair<Contact?, Int>>) {
+        topContactsAdapter.setContactsList(list)
     }
 
     override fun openContactDataFragment(contact : Contact) {
@@ -79,10 +87,10 @@ class HomeFragment : BaseFragment(), HomeMVPView {
         transaction.commit()
     }
 
-    override fun showChartCard(title : String, value : String, dataList: List<Pair<String, Entry>>, animateX : Boolean) {
+    override fun showChartCard(title : String, dataValue : String, dataList: List<Pair<String, Entry>>, animateX : Boolean) {
         //Set card info
         tv_home_chart_title.text = title
-        tv_home_chart_value.text = value
+        tv_home_chart_value.text = dataValue
 
         val mLineChart = home_line_chart
         val entries = ArrayList<Entry>()
@@ -93,7 +101,8 @@ class HomeFragment : BaseFragment(), HomeMVPView {
             days.add(data.first)
             entries.add(data.second)
         }
-        val formatter = IAxisValueFormatter { value, axis -> // we don't draw numbers, so no decimal digits needed
+
+        val formatter = IAxisValueFormatter { value, _ -> // we don't draw numbers, so no decimal digits needed
             days[value.toInt()]
         }
 
