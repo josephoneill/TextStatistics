@@ -23,13 +23,13 @@
         android:layout_height="match_parent"
         android:background="?colorBackground"
         android:fillViewport="true"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fillViewport="true"
-            >
+            android:fillViewport="true">
+
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/home_chart_card"
@@ -116,9 +116,9 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/test"
+                android:id="@+id/home_top_contacts_card"
                 android:layout_width="0dp"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
@@ -135,9 +135,34 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="?colorCardBackground"
                     android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/contacts_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/home_chart_card"
+                        tools:listitem="@layout/contacts_list">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                    <Button
+                        android:id="@+id/btn_see_all_contacts_stats"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/colorCardBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:text="@string/see_contacts_stats"
+                        android:textColor="?colorText" />
 
                 </LinearLayout>
 
@@ -167,7 +192,7 @@
                 android:rowCount="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/test">
+                app:layout_constraintTop_toBottomOf="@+id/home_top_contacts_card">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="193dp"
