@@ -14,4 +14,5 @@ interface HomeMVPInteractor : MVPInteractor {
     fun getMessageCountByDate(messages : List<Message>) : Map<String, Int>
     fun getMessagesInDateRange(messages : List<Message>, startDate : Date, endDate : Date) : List<Message>
     fun setCurrentContact(contact : String?)
+    fun getContactsSortedByMessageCount(messages : List<Message>) : List<Pair<Contact?, Int>>
 }

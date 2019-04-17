@@ -26,6 +26,8 @@ class HomeInteractor @Inject internal constructor(preferenceHelper: PreferenceHe
 
     override fun getMessageCountByDate(messages : List<Message>) : Map<String, Int> = textDataHelper.getMessageCountByDate(messages)
 
+    override fun getContactsSortedByMessageCount(messages : List<Message>) : List<Pair<Contact?, Int>> = textDataHelper.getContactsSortedByMessageCount(messages)
+
     /*override fun filterCreatorsContactsOnly(contacts : List<Contact>?): List<Contact>? {
         return textDataHelper.filterCreatorsContactsOnly(contacts)
     }*/
