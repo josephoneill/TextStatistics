@@ -1,9 +1,13 @@
 package com.joneill.textstatistics.ui.home
 
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.joneill.textstatistics.ui.home.presenter.adapter.TopContactsMVPPresenter
+import com.joneill.textstatistics.ui.home.presenter.adapter.TopContactsPresenter
 import com.joneill.textstatistics.ui.home.view.HomeFragment
 import com.joneill.textstatistics.ui.home.view.HomeMVPView
 import com.joneill.textstatistics.ui.home.view.adapter.ContactsAdapter
+import com.joneill.textstatistics.ui.home.view.adapter.TopContactsAdapter
+import com.joneill.textstatistics.ui.home.view.adapter.TopContactsMVPView
 import com.joneill.textstatistics.ui.main.interactor.HomeInteractor
 import com.joneill.textstatistics.ui.main.interactor.HomeMVPInteractor
 import com.joneill.textstatistics.ui.main.presenter.HomeMVPPresenter
@@ -23,6 +27,13 @@ class HomeFragmentModule {
 
     @Provides
     internal fun provideContactsAdapter(): ContactsAdapter = ContactsAdapter(ArrayList())
+
+    @Provides
+    internal fun provideTopContactsPresenter(topContactsPresenter: TopContactsPresenter<TopContactsMVPView, HomeMVPInteractor>)
+            : TopContactsMVPPresenter<TopContactsMVPView, HomeMVPInteractor> = topContactsPresenter
+
+    @Provides
+    internal fun provideTopContactsAdapter(): TopContactsAdapter = TopContactsAdapter(null, mutableListOf())
 
     @Provides
     internal fun provideLinearLayoutManager(fragment: HomeFragment): LinearLayoutManager = LinearLayoutManager(fragment.activity)
