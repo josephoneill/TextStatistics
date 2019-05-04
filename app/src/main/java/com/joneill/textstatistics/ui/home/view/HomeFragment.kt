@@ -8,24 +8,21 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.formatter.IAxisValueFormatter
+import com.google.android.material.tabs.TabLayout
 import com.joneill.textstatistics.R
 import com.joneill.textstatistics.data.text.data.Contact
 import com.joneill.textstatistics.ui.base.view.BaseFragment
-import com.joneill.textstatistics.ui.main.interactor.HomeMVPInteractor
-import com.joneill.textstatistics.ui.main.presenter.HomeMVPPresenter
+import com.joneill.textstatistics.ui.contactdata.view.ContactDataFragment
+import com.joneill.textstatistics.ui.home.interactor.HomeMVPInteractor
+import com.joneill.textstatistics.ui.home.presenter.HomeMVPPresenter
+import com.joneill.textstatistics.ui.home.presenter.adapter.TopContactsMVPPresenter
+import com.joneill.textstatistics.ui.home.view.adapter.OnContactItemClickListener
+import com.joneill.textstatistics.ui.home.view.adapter.TopContactsAdapter
+import com.joneill.textstatistics.ui.home.view.adapter.TopContactsMVPView
 import kotlinx.android.synthetic.main.fragment_home.*
 import javax.inject.Inject
 import javax.inject.Provider
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.formatter.IAxisValueFormatter
-import android.graphics.Color
-import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.data.LineData
-import com.google.android.material.tabs.TabLayout
-import com.joneill.textstatistics.ui.home.presenter.adapter.TopContactsMVPPresenter
-import com.joneill.textstatistics.ui.home.view.adapter.TopContactsAdapter
-import com.joneill.textstatistics.ui.home.view.adapter.TopContactsMVPView
-import com.joneill.textstatistics.util.CommonUtil
 
 
 class HomeFragment : BaseFragment(), HomeMVPView {
@@ -54,12 +51,12 @@ class HomeFragment : BaseFragment(), HomeMVPView {
     }
 
     override fun setUp() {
-        /*contactsAdapter.onRecyclerItemLongClickListener = object : OnContactItemClickListener {
-            override fun onItemClick(contact : Contact) {
+        topContactsAdapter.setPresenter(topContactsPresenter)
+        topContactsAdapter.onRecyclerItemClickListener = object : OnContactItemClickListener {
+            override fun onItemClick(contact: Contact) {
                 presenter.onContactItemClick(contact)
             }
-        }*/
-        topContactsAdapter.setPresenter(topContactsPresenter)
+        }
 
         contacts_recycler_view.layoutManager = layoutManager.get()
         contacts_recycler_view.itemAnimator = DefaultItemAnimator()
@@ -68,10 +65,6 @@ class HomeFragment : BaseFragment(), HomeMVPView {
         activity?.actionBar?.title = "Home"
         setListeners()
         presenter.onViewPrepared()
-    }
-
-    override fun displayContactsList(contacts: List<Contact>?) = contacts?.let {
-        //topContactsAdapter.setContactsList(list)
     }
 
     override fun displayTopContactsList(list: List<Pair<Contact?, Int>>) {
@@ -88,66 +81,29 @@ class HomeFragment : BaseFragment(), HomeMVPView {
     }
 
     override fun showChartCard(title: String, dataValue: String, dataList: List<Pair<String, Entry>>, animateX: Boolean) {
-        //Set card info
+        // Set card info
         tv_home_chart_title.text = title
         tv_home_chart_value.text = dataValue
 
         val mLineChart = home_line_chart
         val entries = ArrayList<Entry>()
-        // the labels that should be drawn on the XAxis
+        // The labels that should be drawn on the XAxis
         val days = ArrayList<String>()
-
         for (data in dataList) {
             days.add(data.first)
             entries.add(data.second)
         }
-
         val formatter = IAxisValueFormatter { value, _ ->
-            // we don't draw numbers, so no decimal digits needed
             days[value.toInt()]
         }
 
-        val accent = CommonUtil.getAttributeColor(R.attr.colorAccent, context)
-        val textColor = CommonUtil.getAttributeColor(R.attr.colorText, context)
-        val dataSet = LineDataSet(entries, "") // add entries to dataset
-        dataSet.color = accent
-        dataSet.setDrawValues(false)
-        dataSet.lineWidth = 4.0f
-        dataSet.circleRadius = 0.01f
-        dataSet.circleColors = mutableListOf(Color.TRANSPARENT)
-        dataSet.circleHoleColor = accent
-
-        val lineData = LineData(dataSet)
-
-        //Themeing
-        mLineChart.setBackgroundColor(CommonUtil.getAttributeColor(com.joneill.textstatistics.R.attr.cardBackgroundColor, context))
-        mLineChart.setDrawGridBackground(false)
-        mLineChart.setDrawBorders(false)
-        mLineChart.description.isEnabled = false
-        mLineChart.legend.isEnabled = false
-        mLineChart.xAxis.granularity = 1f // minimum axis-step (interval) is 1
         mLineChart.xAxis.valueFormatter = formatter
-        mLineChart.xAxis.setDrawGridLines(false)
-        mLineChart.xAxis.textColor = textColor
-        mLineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
-        mLineChart.xAxis.spaceMin = 0.3f
-        mLineChart.xAxis.spaceMax = 0.3f
-        mLineChart.axisRight.setDrawAxisLine(false)
-        mLineChart.axisRight.setDrawLabels(false)
-        mLineChart.axisRight.setDrawGridLines(false)
-        mLineChart.axisRight.textColor = textColor
-        mLineChart.axisLeft.setDrawAxisLine(false)
-        mLineChart.axisLeft.textColor = textColor
-        mLineChart.axisLeft.setDrawGridLines(false)
-        mLineChart.setTouchEnabled(false)
-        mLineChart.setPinchZoom(false)
-        mLineChart.extraBottomOffset = 15.0f
         if (animateX) {
             mLineChart.animateX(1000)
         } else {
             mLineChart.animateY(700)
         }
-        mLineChart.data = lineData
+        mLineChart.addDataSet(entries, "")
         mLineChart.invalidate() // refresh
     }
 
