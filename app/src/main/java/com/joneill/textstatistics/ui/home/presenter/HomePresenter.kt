@@ -1,16 +1,16 @@
-package com.joneill.textstatistics.ui.main.presenter
+package com.joneill.textstatistics.ui.home.presenter
 
 import com.github.mikephil.charting.data.Entry
+import com.google.gson.Gson
 import com.joneill.textstatistics.data.text.data.Contact
 import com.joneill.textstatistics.ui.base.presenter.BasePresenter
+import com.joneill.textstatistics.ui.home.interactor.HomeMVPInteractor
 import com.joneill.textstatistics.ui.home.view.HomeMVPView
-import com.joneill.textstatistics.ui.main.interactor.HomeMVPInteractor
-import javax.inject.Inject
-import com.google.gson.Gson
 import com.joneill.textstatistics.util.CommonUtil
+import io.reactivex.observers.DisposableCompletableObserver
 import java.text.SimpleDateFormat
 import java.util.*
-import io.reactivex.observers.DisposableCompletableObserver
+import javax.inject.Inject
 
 
 open class HomePresenter<V : HomeMVPView, I : HomeMVPInteractor> @Inject internal constructor(interactor: I) : BasePresenter<V, I>(interactor = interactor), HomeMVPPresenter<V, I> {
@@ -27,7 +27,7 @@ open class HomePresenter<V : HomeMVPView, I : HomeMVPInteractor> @Inject interna
         })
     }
 
-    private fun onDataLoaded() = interactor?.let { 
+    private fun onDataLoaded() = interactor?.let { it ->
         getView()?.showDashboard()
 
         val msgs = it.getMessagesInDateRange(it.getMessages(), CommonUtil.getDateXDaysAgo(30), Date(System.currentTimeMillis()))
@@ -37,7 +37,7 @@ open class HomePresenter<V : HomeMVPView, I : HomeMVPInteractor> @Inject interna
 
     private fun loadChart(title: String, days: Long, animateX: Boolean) = interactor?.let {
         var messages = it.getMessages()
-        var entries: MutableList<Pair<String, Entry>> = mutableListOf()
+        val entries: MutableList<Pair<String, Entry>> = mutableListOf()
         messages = it.getMessagesInDateRange(messages, CommonUtil.getDateXDaysAgo(days), Date(System.currentTimeMillis()))
         val counts = it.getMessageCountByDate(messages)
 
@@ -46,6 +46,7 @@ open class HomePresenter<V : HomeMVPView, I : HomeMVPInteractor> @Inject interna
             val name = SimpleDateFormat("MM/dd").format(date)
             var count: Float? = counts[name]?.toFloat()
             if (count == null) {
+
                 count = 0.0f
             }
             entries.add(Pair(name, Entry(i.toFloat(), count)))
