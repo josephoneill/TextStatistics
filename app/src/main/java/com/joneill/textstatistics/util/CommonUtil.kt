@@ -1,19 +1,15 @@
 package com.joneill.textstatistics.util
 
+import android.content.ContentUris
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.ContactsContract
-import android.graphics.BitmapFactory
-import android.content.ContentUris
+import android.util.TypedValue
 import java.io.ByteArrayInputStream
 import java.text.SimpleDateFormat
 import java.util.*
-import android.R.attr.data
-import android.R
-import android.util.TypedValue
-
-
 
 
 object CommonUtil {
@@ -28,7 +24,7 @@ object CommonUtil {
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
-            cursor!!.close()
+            cursor?.close()
         }
 
         return displayName
@@ -37,7 +33,7 @@ object CommonUtil {
     fun getContactImage(context: Context?, id : String) : Bitmap? {
         val contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id.toLong())
         val photoUri = Uri.withAppendedPath(contactUri, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY)
-        val cursor = context!!.contentResolver.query(photoUri,
+        val cursor = context?.contentResolver?.query(photoUri,
                 arrayOf(ContactsContract.Contacts.Photo.PHOTO), null, null, null) ?: return null
         cursor.use {
             if (cursor.moveToFirst()) {
