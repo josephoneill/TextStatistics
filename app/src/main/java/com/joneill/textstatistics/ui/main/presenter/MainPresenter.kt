@@ -12,13 +12,9 @@ import javax.inject.Inject
 
 
 class MainPresenter<V : MainMVPView, I : MainMVPInteractor> @Inject internal constructor(interactor: I) : BasePresenter<V, I>(interactor = interactor), MainMVPPresenter<V, I> {
-
-    override fun onAttach(view: V?) {
-        super.onAttach(view)
-    }
-
+    
     override fun requestPermissions() {
-        val permissions = arrayOf(android.Manifest.permission.READ_SMS, android.Manifest.permission.READ_CONTACTS)
+        val permissions = arrayOf(Manifest.permission.READ_SMS, Manifest.permission.READ_CONTACTS)
         //Request permission to read SMS data
         if (ContextCompat.checkSelfPermission(getView()!!.getViewActivity(),
                         Manifest.permission.READ_SMS)
