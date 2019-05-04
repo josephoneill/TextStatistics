@@ -5,11 +5,9 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import androidx.core.content.edit
 import com.joneill.textstatistics.R
-import com.joneill.textstatistics.di.PreferenceInfo
 import javax.inject.Inject
 
-class AppPreferenceHelper @Inject constructor(val context: Context,
-                                              @PreferenceInfo private val prefFileName: String) : PreferenceHelper {
+class AppPreferenceHelper @Inject constructor(val context: Context) : PreferenceHelper {
 
     private val mPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     private val prefKeyCurrentContact : String = context.getString(R.string.key_current_contact)
