@@ -1,14 +1,13 @@
-package com.joneill.textstatistics.ui.main.interactor
+package com.joneill.textstatistics.ui.contactdata.interactor
 
 import com.joneill.textstatistics.data.preferences.PreferenceHelper
-import com.joneill.textstatistics.ui.base.interactor.BaseInteractor
-import javax.inject.Inject
-import android.content.Context
 import com.joneill.textstatistics.data.repository.MessagesRepository
 import com.joneill.textstatistics.data.text.AppTextDataHelper
 import com.joneill.textstatistics.data.text.data.Contact
 import com.joneill.textstatistics.data.text.data.Message
+import com.joneill.textstatistics.ui.base.interactor.BaseInteractor
 import java.util.*
+import javax.inject.Inject
 
 
 class ContactDataInteractor @Inject internal constructor(preferenceHelper: PreferenceHelper, private val textDataHelper: AppTextDataHelper, private val messagesRepository: MessagesRepository) : BaseInteractor(preferenceHelper = preferenceHelper), ContactDataMVPInteractor {
@@ -22,6 +21,8 @@ class ContactDataInteractor @Inject internal constructor(preferenceHelper: Prefe
     override fun getCurrentContact(): String? = preferenceHelper.getCurrentContact()
 
     override fun getMessagesInDateRange(messages: List<Message>, startDate: Date, endDate: Date): List<Message> = textDataHelper.getMessagesInDateRange(messages, startDate, endDate)
+
+    override fun getMessageCountByDate(messages : List<Message>) : Map<String, Int> = textDataHelper.getMessageCountByDate(messages)
 
     override fun getMessageCountOnDate(messages: List<Message>, date: Date): Int = textDataHelper.getMessageCountOnDate(messages, date)
 

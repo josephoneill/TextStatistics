@@ -1,6 +1,5 @@
 package com.joneill.textstatistics.ui.base.interactor
 
-import com.joneill.textstatistics.data.preferences.AppPreferenceHelper
 import com.joneill.textstatistics.data.preferences.PreferenceHelper
 import javax.inject.Inject
 

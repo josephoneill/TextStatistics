@@ -1,7 +1,6 @@
 package com.joneill.textstatistics.ui.contactdata
 
-import com.joneill.textstatistics.ui.contactdata.ContactDataFragmentModule
-import com.joneill.textstatistics.ui.home.view.ContactDataFragment
+import com.joneill.textstatistics.ui.contactdata.view.ContactDataFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

@@ -2,12 +2,8 @@ package com.joneill.textstatistics.ui.settings.view
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.provider.Settings
-import androidx.fragment.app.FragmentTransaction
-import com.joneill.textstatistics.R
 import androidx.preference.PreferenceFragmentCompat
-
-
+import com.joneill.textstatistics.R
 
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -18,16 +14,12 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     override fun onResume() {
         super.onResume()
-        preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+        preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
     }
 
     override fun onPause() {
         super.onPause()
         preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     override fun onSharedPreferenceChanged(p0: SharedPreferences?, p1: String?) {
