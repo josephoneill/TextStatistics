@@ -23,7 +23,7 @@ class ContactsAdapter(private val contactsList: MutableList<Contact>) : Recycler
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ContactsViewHolder(LayoutInflater.from(parent.context)
             .inflate(R.layout.contacts_list, parent, false))
-    
+
     inner class ContactsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), LayoutContainer {
 
         override val containerView: View?
