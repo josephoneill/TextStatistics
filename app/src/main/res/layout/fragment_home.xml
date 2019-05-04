@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?colorBackground"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ProgressBar
@@ -61,15 +60,16 @@
                         android:layout_height="64dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="16dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp">
 
                         <TextView
                             android:id="@+id/tv_home_chart_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TITLE"
+                            android:text="@string/chart_title"
                             android:textColor="?colorText"
-                            android:textSize="18dp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -77,20 +77,18 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="VALUE"
+                            android:text="@string/chart_value"
                             android:textColor="?colorAccent"
-                            android:textSize="20dp" />
+                            android:textSize="20sp" />
 
                     </LinearLayout>
 
-                    <com.github.mikephil.charting.charts.LineChart
+                    <com.joneill.textstatistics.ui.views.ThemedLineChart
                         android:id="@+id/home_line_chart"
                         android:layout_width="match_parent"
                         android:layout_height="252dp"
-                        android:layout_marginLeft="16dp">
-
-                    </com.github.mikephil.charting.charts.LineChart>
-
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"/>
 
                     <com.google.android.material.tabs.TabLayout
                         android:id="@+id/home_card_tabs"
@@ -187,6 +185,7 @@
                 android:columnCount="2"
                 android:orientation="horizontal"
                 android:paddingLeft="8dp"
+                android:paddingRight="8dp"
                 android:paddingTop="16dp"
                 android:paddingBottom="8dp"
                 android:rowCount="1"
@@ -206,23 +205,24 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="16dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TITLE"
+                            android:text="@string/chart_title"
                             android:textColor="?colorText"
-                            android:textSize="18dp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="44"
+                            android:text="@string/chart_value"
                             android:textColor="?colorText"
-                            android:textSize="20dp" />
+                            android:textSize="20sp" />
 
                     </LinearLayout>
 
@@ -234,19 +234,21 @@
                     android:layout_marginLeft="8dp"
                     android:orientation="vertical"
                     app:cardBackgroundColor="?colorCardBackground"
-                    app:cardElevation="4dp">
+                    app:cardElevation="4dp"
+                    android:layout_marginStart="8dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="16dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TITLE"
+                            android:text="@string/chart_title"
                             android:textColor="?colorText"
                             android:textSize="18dp"
                             android:textStyle="bold" />
@@ -255,9 +257,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="44"
+                            android:text="@string/chart_value"
                             android:textColor="?colorText"
-                            android:textSize="20dp" />
+                            android:textSize="20sp" />
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
