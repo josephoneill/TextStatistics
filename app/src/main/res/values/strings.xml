@@ -6,4 +6,9 @@
     <string name="settings">Settings</string>
     <string name="enable_dark_mode_title">Enable Dark Mode</string>
     <string name="see_contacts_stats">SEE ALL CONTACTS STATISTICS</string>
+    <string name="cd_contact_dp">Contact DP</string>
+    <string name="chart_title">TITLE</string>
+    <string name="chart_value">VALUE</string>
+    <string name="contact_name">Contact Name</string>
+    <string name="messages_past_30_days">%1$s messages in the past 30 days</string>
 </resources>
