@@ -54,10 +54,6 @@ class MainActivity : BaseActivity(), MainMVPView, HasSupportFragmentInjector {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
-
     override fun loadHomeFragment() {
         val transaction : FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.main_fragment_container, HomeFragment())
