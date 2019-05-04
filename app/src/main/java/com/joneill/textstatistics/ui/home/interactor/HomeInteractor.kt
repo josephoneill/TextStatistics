@@ -1,14 +1,13 @@
-package com.joneill.textstatistics.ui.main.interactor
+package com.joneill.textstatistics.ui.home.interactor
 
 import com.joneill.textstatistics.data.preferences.PreferenceHelper
-import com.joneill.textstatistics.ui.base.interactor.BaseInteractor
-import javax.inject.Inject
-import android.content.Context
 import com.joneill.textstatistics.data.repository.MessagesRepository
 import com.joneill.textstatistics.data.text.AppTextDataHelper
 import com.joneill.textstatistics.data.text.data.Contact
 import com.joneill.textstatistics.data.text.data.Message
+import com.joneill.textstatistics.ui.base.interactor.BaseInteractor
 import java.util.*
+import javax.inject.Inject
 
 
 class HomeInteractor @Inject internal constructor(preferenceHelper: PreferenceHelper, private val textDataHelper: AppTextDataHelper, private val messagesRepository: MessagesRepository) : BaseInteractor(preferenceHelper = preferenceHelper), HomeMVPInteractor {

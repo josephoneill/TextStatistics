@@ -1,4 +1,4 @@
-package com.joneill.textstatistics.ui.main.interactor
+package com.joneill.textstatistics.ui.home.interactor
 
 import com.joneill.textstatistics.data.text.data.Contact
 import com.joneill.textstatistics.data.text.data.Message
