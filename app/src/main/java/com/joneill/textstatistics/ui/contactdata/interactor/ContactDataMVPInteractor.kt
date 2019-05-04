@@ -1,4 +1,4 @@
-package com.joneill.textstatistics.ui.main.interactor
+package com.joneill.textstatistics.ui.contactdata.interactor
 
 import com.joneill.textstatistics.data.text.data.Contact
 import com.joneill.textstatistics.data.text.data.Message
@@ -10,6 +10,7 @@ interface ContactDataMVPInteractor : MVPInteractor {
     fun getMessagesByContact(messages : List<Message>, contact : Contact) : List<Message>
     fun getMessagesByDate(messages : List<Message>, date : Date) : List<Message>
     fun getMessageCountOnDate(messages : List<Message>, date : Date) : Int
+    fun getMessageCountByDate(messages : List<Message>) : Map<String, Int>
     fun getMessagesInDateRange(messages : List<Message>, startDate : Date, endDate : Date) : List<Message>
     fun getCurrentContact() : String?
 }
