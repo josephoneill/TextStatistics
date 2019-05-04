@@ -23,22 +23,15 @@ class ContactsAdapter(private val contactsList: MutableList<Contact>) : Recycler
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ContactsViewHolder(LayoutInflater.from(parent.context)
             .inflate(R.layout.contacts_list, parent, false))
-
-    internal fun addContactsToList(contact: List<Contact>) {
-        if (!this.contactsList.containsAll(contact)) {
-            this.contactsList.addAll(contact)
-            notifyDataSetChanged()
-        }
-    }
-
+    
     inner class ContactsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), LayoutContainer {
 
         override val containerView: View?
             get() = itemView
 
         fun clear() {
-            text_contact_name_card.text = ""
-            text_contact_number_card.text = ""
+            text_name_contact_card.text = ""
+            text_message_count_contact_card.text = ""
         }
 
         fun onBind(position: Int) {
@@ -55,12 +48,12 @@ class ContactsAdapter(private val contactsList: MutableList<Contact>) : Recycler
             }
         }
 
-        private fun inflateData(name: String?, number: String?, profileImage: Bitmap?) {
+        private fun inflateData(name: String?, count: String?, profileImage: Bitmap?) {
             name?.let {
-                text_contact_name_card.text = it
+                text_name_contact_card.text = it
             }
-            number?.let {
-                text_contact_number_card.text = it
+            count?.let {
+                text_message_count_contact_card.text = this.itemView.resources.getString(R.string.messages_past_30_days, it)
             }
             profileImage?.let {
                 image_contact_card.setImageBitmap(profileImage)
