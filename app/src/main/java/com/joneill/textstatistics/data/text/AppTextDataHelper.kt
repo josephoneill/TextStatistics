@@ -20,10 +20,7 @@ class AppTextDataHelper @Inject constructor(private val context: Context) : Text
             ContactsContract.Contacts._ID,
             ContactsContract.Contacts.HAS_PHONE_NUMBER,
             ContactsContract.Contacts.LOOKUP_KEY,
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-                ContactsContract.Contacts.DISPLAY_NAME_PRIMARY
-            else
-                ContactsContract.Contacts.DISPLAY_NAME
+            ContactsContract.Contacts.DISPLAY_NAME_PRIMARY
     )
 
     private val contentResolver = context.contentResolver!!
@@ -37,23 +34,25 @@ class AppTextDataHelper @Inject constructor(private val context: Context) : Text
      */
     override fun getAllConversations(contacts: List<Contact>): List<Message> {
         val conversations = arrayListOf<Message>()
-        val projection = arrayOf(Telephony.Sms.Conversations._ID, Telephony.Sms.Conversations.BODY, Telephony.Sms.Conversations.ADDRESS,
-                Telephony.Sms.Conversations.DATE)
+        val projection = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            arrayOf(Telephony.Sms.Conversations._ID, Telephony.Sms.Conversations.BODY, Telephony.Sms.Conversations.ADDRESS,
+                    Telephony.Sms.Conversations.DATE)
+        } else {
+            TODO("VERSION.SDK_INT < KITKAT")
+        }
         val uri = Uri.parse("content://mms-sms/complete-conversations")
         val cursor = contentResolver.query(uri, projection, null, null, null)
-        try {
-            while (cursor!!.moveToNext()) {
-                val body = cursor.getString(cursor.getColumnIndex(Telephony.Sms.Conversations.BODY))
-                var number = cursor.getString(cursor.getColumnIndex(Telephony.Sms.Conversations.ADDRESS))
+        cursor.use {
+            while (it!!.moveToNext()) {
+                val body = it.getString(it.getColumnIndex(Telephony.Sms.Conversations.BODY))
+                var number = it.getString(it.getColumnIndex(Telephony.Sms.Conversations.ADDRESS))
                 number = number?.replace(NUMBER_REGEX, "")
                 val contact = getContactByNumber(contacts, number)
-                val date = cursor.getString(cursor.getColumnIndex(Telephony.Sms.Conversations.DATE)).toLong()
+                val date = it.getString(it.getColumnIndex(Telephony.Sms.Conversations.DATE)).toLong()
                 val message = Message(body, contact, Date(date))
 
                 conversations.add(message)
             }
-        } finally {
-            cursor!!.close()
         }
         return conversations
     }
@@ -64,7 +63,7 @@ class AppTextDataHelper @Inject constructor(private val context: Context) : Text
      * @return a {@code List<Contact>?)} with non-contacts removed
      */
     override fun filterCreatorsContactsOnly(contacts: List<Contact>?): List<Contact> {
-        return contacts!!.filter { !it.name.isEmpty() }
+        return contacts!!.filter { it.name.isNotEmpty() }
     }
 
     /**
@@ -147,7 +146,7 @@ class AppTextDataHelper @Inject constructor(private val context: Context) : Text
      *         and the value is the count
      */
     override fun getMessageCountByDate(messages: List<Message>): Map<String, Int> {
-        var map : MutableMap<String, Int> = mutableMapOf()
+        val map : MutableMap<String, Int> = mutableMapOf()
 
         for(m : Message in messages) {
             val date = SimpleDateFormat("MM/dd").format(m.date)
@@ -163,7 +162,8 @@ class AppTextDataHelper @Inject constructor(private val context: Context) : Text
 
     /**
      * Gets a list of {@link Message} objects that fall within a given date range
-     * @param messages the list of messages to be searched
+     * @param messages the list
+     * of messages to be searched
      * @param startDate the start Date to filter by
      * @param endDate the end Date to filter by
      * @return a {@code List<Message>} object that contains the messages within the given date range
@@ -171,8 +171,8 @@ class AppTextDataHelper @Inject constructor(private val context: Context) : Text
     override fun getMessagesInDateRange(messages: List<Message>, startDate: Date, endDate: Date): List<Message> = messages.filter { !(it.date.before(startDate) || it.date.after(endDate)) }
 
     override fun getContactsSortedByMessageCount(messages: List<Message>): List<Pair<Contact?, Int>> {
-        var map : MutableMap<Contact?, Int> = mutableMapOf()
-        var list: List<Pair<Contact?, Int>>
+        val map : MutableMap<Contact?, Int> = mutableMapOf()
+        val list: List<Pair<Contact?, Int>>
         for (m : Message in messages) {
             if(map.containsKey(m.contact)) {
                 map[m.contact] = map[m.contact]!!+1
@@ -181,8 +181,7 @@ class AppTextDataHelper @Inject constructor(private val context: Context) : Text
             }
         }
 
-        list = map.toList()
-        list.sortedWith(compareBy {it.second})
+        list = map.toList().sortedWith(compareByDescending { it.second })
         return list
     }
 }
