@@ -28,6 +28,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 class HomeFragment : BaseFragment(), HomeMVPView {
+
     @Inject
     internal lateinit var topContactsAdapter: TopContactsAdapter
     @Inject
@@ -88,22 +89,22 @@ class HomeFragment : BaseFragment(), HomeMVPView {
         home_chart_card.setTitle(title)
         home_chart_card.setValue(dataValue)
 
-        val mLineChart = home_chart_card.home_line_chart
+        val mLineChart = home_chart_card.card_line_chart
         // The labels that should be drawn on the XAxis
         val days = ArrayList<String>()
 
         val dataSets = ArrayList<LineDataSet>()
 
-        for (comparisons in comparisonsList) {
+        for (comparison in comparisonsList) {
             val isDaysEmpty = days.size == 0
             val dataComp = ArrayList<Entry>()
-            for (data in comparisons.messageCountsByDate) {
+            for (data in comparison.messageCountsByDate) {
                 if(isDaysEmpty) {
                     days.add(data.date)
                 }
                 dataComp.add(data.countEntry)
             }
-            val setComp = LineDataSet(dataComp, "")
+            val setComp = LineDataSet(dataComp, comparison.label)
             dataSets.add(setComp)
         }
 
@@ -119,6 +120,11 @@ class HomeFragment : BaseFragment(), HomeMVPView {
         }
         mLineChart.addDataSet(dataSets)
         mLineChart.invalidate() // refresh
+    }
+
+    override fun showTotalMessagesCard(total: Int) {
+        tv_home_total_messages_title.text = getString(R.string.total_texts_count)
+        tv_home_total_messages_value.text = total.toString()
     }
 
     private fun setListeners() {
