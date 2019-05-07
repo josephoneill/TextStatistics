@@ -23,7 +23,7 @@
             android:layout_marginStart="16dp">
 
             <TextView
-                android:id="@+id/tv_home_chart_title"
+                android:id="@+id/tv_chart_card_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/chart_title"
@@ -32,7 +32,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv_home_chart_value"
+                android:id="@+id/tv_chart_card_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -43,14 +43,14 @@
         </LinearLayout>
 
         <com.joneill.textstatistics.ui.views.ThemedLineChart
-            android:id="@+id/home_line_chart"
+            android:id="@+id/card_line_chart"
             android:layout_width="match_parent"
             android:layout_height="252dp"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"/>
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/home_card_tabs"
+            android:id="@+id/card_line_chart_tabs"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:tabSelectedTextColor="?colorText"
