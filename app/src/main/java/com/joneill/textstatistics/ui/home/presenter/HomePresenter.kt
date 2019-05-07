@@ -2,6 +2,8 @@ package com.joneill.textstatistics.ui.home.presenter
 
 import com.github.mikephil.charting.data.Entry
 import com.google.gson.Gson
+import com.joneill.textstatistics.data.graph.ComparisonEntrySet
+import com.joneill.textstatistics.data.graph.CountedDateMessageEntry
 import com.joneill.textstatistics.data.text.data.Contact
 import com.joneill.textstatistics.ui.base.presenter.BasePresenter
 import com.joneill.textstatistics.ui.home.interactor.HomeMVPInteractor
@@ -37,22 +39,31 @@ open class HomePresenter<V : HomeMVPView, I : HomeMVPInteractor> @Inject interna
 
     private fun loadChart(title: String, days: Long, animateX: Boolean) = interactor?.let {
         var messages = it.getMessages()
-        val entries: MutableList<Pair<String, Entry>> = mutableListOf()
+        val comparisonsList : MutableList<ComparisonEntrySet> = mutableListOf()
+        val sentEntries: MutableList<CountedDateMessageEntry> = mutableListOf()
+        val receivedEntries: MutableList<CountedDateMessageEntry> = mutableListOf()
         messages = it.getMessagesInDateRange(messages, CommonUtil.getDateXDaysAgo(days), Date(System.currentTimeMillis()))
-        val counts = it.getMessageCountByDate(messages)
+        val sentMessages = messages.filter { message -> message.sent}
+        val receivedMessages = messages.filter { message -> !message.sent}
+        val sentCounts = it.getMessageCountByDate(sentMessages)
+        val receivedCounts = it.getMessageCountByDate(receivedMessages)
 
         for (i in 0 until days) {
             val date = CommonUtil.getDateXDaysAgo(days - 1 - i)
             val name = SimpleDateFormat("MM/dd").format(date)
-            var count: Float? = counts[name]?.toFloat()
-            if (count == null) {
+            var sentCount: Float? = sentCounts[name]?.toFloat()
+            var receivedCount: Float? = receivedCounts[name]?.toFloat()
+            if(sentCount == null) sentCount = 0.0f
+            if(receivedCount == null) receivedCount = 0.0f
 
-                count = 0.0f
-            }
-            entries.add(Pair(name, Entry(i.toFloat(), count)))
+            sentEntries.add(CountedDateMessageEntry(name, Entry(i.toFloat(), sentCount)))
+            receivedEntries.add(CountedDateMessageEntry(name, Entry(i.toFloat(), receivedCount)))
         }
 
-        getView()?.showChartCard(title, messages.count().toString(), entries, animateX)
+        comparisonsList.add(ComparisonEntrySet(sentEntries, ""))
+        comparisonsList.add(ComparisonEntrySet(receivedEntries, ""))
+
+        getView()?.showChartCard(title, messages.count().toString(), comparisonsList, animateX)
     }
 
     override fun onContactItemClick(contact: Contact) {
