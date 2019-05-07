@@ -3,7 +3,6 @@ package com.joneill.textstatistics.ui.views
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
-import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -54,7 +53,7 @@ class ThemedLineChart : LineChart {
 
     private fun initAccentColors() {
         val accent1 = CommonUtil.getAttributeColor(R.attr.colorAccent, context)
-        val accent2 = ContextCompat.getColor(context, R.color.colorAccentLightTheme)
+        val accent2 = CommonUtil.getAttributeColor(R.attr.colorContrastAccent, context)
         accentColors = intArrayOf(accent1, accent2)
     }
 

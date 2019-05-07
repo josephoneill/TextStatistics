@@ -25,14 +25,14 @@ class TabbedThemedLineChartCard : CardView{
     }
 
     fun setTitle(title : String) {
-        this.tv_home_chart_title.text = title
+        this.tv_chart_card_title.text = title
     }
 
     fun setValue(value : String) {
-        this.tv_home_chart_value.text = value
+        this.tv_chart_card_value.text = value
     }
 
     fun addOnTabSelectedListener(listener : TabLayout.OnTabSelectedListener) {
-        this.home_card_tabs.addOnTabSelectedListener(listener)
+        this.card_line_chart_tabs.addOnTabSelectedListener(listener)
     }
 }
