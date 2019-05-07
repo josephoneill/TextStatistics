@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorContrastAccent">@color/materialPrimaryBlue</item>
         <item name="colorBackground">@color/colorDarkBackground</item>
         <item name="colorCardBackground">@color/colorPrimary</item>
         <item name="colorText">@color/white</item>
@@ -17,6 +18,7 @@
         <item name="colorPrimary">@color/colorPrimaryLightTheme</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkLightTheme</item>
         <item name="colorAccent">@color/colorAccentLightTheme</item>
+        <item name="colorContrastAccent">@color/colorAccent</item>
         <item name="colorBackground">@color/colorLightBackground</item>
         <item name="colorCardBackground">@color/white</item>
         <item name="colorText">@color/black</item>
