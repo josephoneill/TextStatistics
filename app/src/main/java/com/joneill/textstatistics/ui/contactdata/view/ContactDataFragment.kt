@@ -7,13 +7,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.joneill.textstatistics.R
+import com.joneill.textstatistics.data.graph.ComparisonEntrySet
 import com.joneill.textstatistics.data.text.data.Message
 import com.joneill.textstatistics.ui.base.view.BaseFragment
 import com.joneill.textstatistics.ui.contactdata.interactor.ContactDataMVPInteractor
 import com.joneill.textstatistics.ui.contactdata.presenter.ContactDataMVPPresenter
 import kotlinx.android.synthetic.main.fragment_contact_data.*
+import kotlinx.android.synthetic.main.tabbed_themed_graph_card.view.*
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -47,19 +50,30 @@ class ContactDataFragment : BaseFragment(), ContactDataMVPView {
         contactDataAdapter.addMessagesToList(it)
     }
 
-    override fun showChartCard(title: String, dataValue: String, dataList: List<Pair<String, Entry>>, animateX: Boolean) {
+    override fun showChartCard(title: String, dataValue: String, comparisonsList: List<ComparisonEntrySet>, animateX: Boolean) {
         // Set card info
-        //tv_home_chart_title.text = title
-        //tv_home_chart_value.text = dataValue
+        contact_data_chart_card.setTitle(title)
+        contact_data_chart_card.setValue(dataValue)
 
-        val mLineChart = contact_line_chart
-        val entries = ArrayList<Entry>()
+        val mLineChart = contact_data_chart_card.home_line_chart
         // The labels that should be drawn on the XAxis
         val days = ArrayList<String>()
-        for (data in dataList) {
-            days.add(data.first)
-            entries.add(data.second)
+
+        val dataSets = ArrayList<LineDataSet>()
+
+        for (comparisons in comparisonsList) {
+            val isDaysEmpty = days.size == 0
+            val dataComp = ArrayList<Entry>()
+            for (data in comparisons.messageCountsByDate) {
+                if(isDaysEmpty) {
+                    days.add(data.date)
+                }
+                dataComp.add(data.countEntry)
+            }
+            val setComp = LineDataSet(dataComp, "")
+            dataSets.add(setComp)
         }
+
         val formatter = IAxisValueFormatter { value, _ ->
             days[value.toInt()]
         }
@@ -70,7 +84,7 @@ class ContactDataFragment : BaseFragment(), ContactDataMVPView {
         } else {
             mLineChart.animateY(700)
         }
-        mLineChart.addDataSet(entries, "")
+        mLineChart.addDataSet(dataSets)
         mLineChart.invalidate() // refresh
     }
 }

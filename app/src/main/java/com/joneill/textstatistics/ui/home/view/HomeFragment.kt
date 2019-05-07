@@ -8,9 +8,11 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.google.android.material.tabs.TabLayout
 import com.joneill.textstatistics.R
+import com.joneill.textstatistics.data.graph.ComparisonEntrySet
 import com.joneill.textstatistics.data.text.data.Contact
 import com.joneill.textstatistics.ui.base.view.BaseFragment
 import com.joneill.textstatistics.ui.contactdata.view.ContactDataFragment
@@ -21,9 +23,9 @@ import com.joneill.textstatistics.ui.home.view.adapter.OnContactItemClickListene
 import com.joneill.textstatistics.ui.home.view.adapter.TopContactsAdapter
 import com.joneill.textstatistics.ui.home.view.adapter.TopContactsMVPView
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.tabbed_themed_graph_card.view.*
 import javax.inject.Inject
 import javax.inject.Provider
-
 
 class HomeFragment : BaseFragment(), HomeMVPView {
     @Inject
@@ -72,6 +74,7 @@ class HomeFragment : BaseFragment(), HomeMVPView {
     }
 
     override fun openContactDataFragment(contact: Contact) {
+
         val fragment = ContactDataFragment()
         val transaction: FragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
 
@@ -80,19 +83,30 @@ class HomeFragment : BaseFragment(), HomeMVPView {
         transaction.commit()
     }
 
-    override fun showChartCard(title: String, dataValue: String, dataList: List<Pair<String, Entry>>, animateX: Boolean) {
+    override fun showChartCard(title: String, dataValue: String, comparisonsList: List<ComparisonEntrySet>, animateX: Boolean) {
         // Set card info
-        tv_home_chart_title.text = title
-        tv_home_chart_value.text = dataValue
+        home_chart_card.setTitle(title)
+        home_chart_card.setValue(dataValue)
 
-        val mLineChart = home_line_chart
-        val entries = ArrayList<Entry>()
+        val mLineChart = home_chart_card.home_line_chart
         // The labels that should be drawn on the XAxis
         val days = ArrayList<String>()
-        for (data in dataList) {
-            days.add(data.first)
-            entries.add(data.second)
+
+        val dataSets = ArrayList<LineDataSet>()
+
+        for (comparisons in comparisonsList) {
+            val isDaysEmpty = days.size == 0
+            val dataComp = ArrayList<Entry>()
+            for (data in comparisons.messageCountsByDate) {
+                if(isDaysEmpty) {
+                    days.add(data.date)
+                }
+                dataComp.add(data.countEntry)
+            }
+            val setComp = LineDataSet(dataComp, "")
+            dataSets.add(setComp)
         }
+
         val formatter = IAxisValueFormatter { value, _ ->
             days[value.toInt()]
         }
@@ -103,12 +117,12 @@ class HomeFragment : BaseFragment(), HomeMVPView {
         } else {
             mLineChart.animateY(700)
         }
-        mLineChart.addDataSet(entries, "")
+        mLineChart.addDataSet(dataSets)
         mLineChart.invalidate() // refresh
     }
 
     private fun setListeners() {
-        home_card_tabs.addOnTabSelectedListener(object :
+        home_chart_card.addOnTabSelectedListener(object :
                 TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 presenter.onTabSelected(tab.position)
