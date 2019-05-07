@@ -3,5 +3,6 @@
     <attr name="colorBackground" format="reference|color" />
     <attr name="colorCardBackground" format="reference|color" />
     <attr name="colorText" format="reference|color" />
+    <attr name="colorContrastAccent" format="reference|color"/>
     <attr name="colorTextAccent" format="reference|color" />
 </resources>
