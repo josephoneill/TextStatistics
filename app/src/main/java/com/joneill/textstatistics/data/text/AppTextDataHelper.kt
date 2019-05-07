@@ -35,7 +35,7 @@ class AppTextDataHelper @Inject constructor(private val context: Context) : Text
     override fun getAllConversations(contacts: List<Contact>): List<Message> {
         val conversations = arrayListOf<Message>()
         val projection = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            arrayOf(Telephony.Sms.Conversations._ID, Telephony.Sms.Conversations.BODY, Telephony.Sms.Conversations.ADDRESS,
+            arrayOf(Telephony.Sms.Conversations._ID, Telephony.Sms.Conversations.TYPE, Telephony.Sms.Conversations.BODY, Telephony.Sms.Conversations.ADDRESS,
                     Telephony.Sms.Conversations.DATE)
         } else {
             TODO("VERSION.SDK_INT < KITKAT")
@@ -44,12 +44,14 @@ class AppTextDataHelper @Inject constructor(private val context: Context) : Text
         val cursor = contentResolver.query(uri, projection, null, null, null)
         cursor.use {
             while (it!!.moveToNext()) {
+                val type : String? = it.getString(it.getColumnIndex(Telephony.Sms.Conversations.TYPE))
+                val isSent = type?.toInt() == Telephony.Sms.Conversations.MESSAGE_TYPE_SENT
                 val body = it.getString(it.getColumnIndex(Telephony.Sms.Conversations.BODY))
                 var number = it.getString(it.getColumnIndex(Telephony.Sms.Conversations.ADDRESS))
                 number = number?.replace(NUMBER_REGEX, "")
                 val contact = getContactByNumber(contacts, number)
                 val date = it.getString(it.getColumnIndex(Telephony.Sms.Conversations.DATE)).toLong()
-                val message = Message(body, contact, Date(date))
+                val message = Message(body, contact, Date(date), isSent)
 
                 conversations.add(message)
             }
