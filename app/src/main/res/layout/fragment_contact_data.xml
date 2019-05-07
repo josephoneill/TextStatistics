@@ -5,17 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.joneill.textstatistics.ui.views.ThemedLineChart
-        android:id="@+id/contact_line_chart"
-        android:layout_width="match_parent"
-        android:layout_height="252dp"
-        app:layout_constraintTop_toTopOf="parent"/>
+    <com.joneill.textstatistics.ui.views.TabbedThemedLineChartCard
+        android:id="@+id/contact_data_chart_card"
+        android:layout_width="0dp"
+        android:layout_height="380dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/contact_data_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:listitem="@layout/contact_data_list"
-        app:layout_constraintTop_toBottomOf="@id/contact_line_chart"/>
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/contact_data_chart_card" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
