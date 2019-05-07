@@ -127,6 +127,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/home_top_contacts_card">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/home_card_total_messages"
                     android:layout_width="193dp"
                     android:layout_height="193dp"
                     android:orientation="vertical"
@@ -142,6 +143,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tv_home_total_messages_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/chart_title"
@@ -150,11 +152,12 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/tv_home_total_messages_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/chart_value"
-                            android:textColor="?colorText"
+                            android:textColor="?colorAccent"
                             android:textSize="20sp" />
 
                     </LinearLayout>
@@ -183,7 +186,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/chart_title"
                             android:textColor="?colorText"
-                            android:textSize="18dp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
