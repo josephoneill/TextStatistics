@@ -3,6 +3,7 @@ package com.joneill.textstatistics.ui.views
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
+import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -12,6 +13,8 @@ import com.joneill.textstatistics.R
 import com.joneill.textstatistics.util.CommonUtil
 
 class ThemedLineChart : LineChart {
+    private lateinit var accentColors : IntArray
+
     constructor(context : Context) : super(context)
     constructor(context : Context?, attrs: AttributeSet) : super(context, attrs)
     constructor(context : Context?, attrs: AttributeSet, defStyle : Int) : super(context, attrs, defStyle)
@@ -45,16 +48,31 @@ class ThemedLineChart : LineChart {
         this.setTouchEnabled(false)
         this.setPinchZoom(false)
         this.extraBottomOffset = 15.0f
+
+        this.initAccentColors()
+    }
+
+    private fun initAccentColors() {
+        val accent1 = CommonUtil.getAttributeColor(R.attr.colorAccent, context)
+        val accent2 = ContextCompat.getColor(context, R.color.colorAccentLightTheme)
+        accentColors = intArrayOf(accent1, accent2)
     }
 
     fun addDataSet(yVals: List<Entry>, label : String) {
         val dataSet = LineDataSet(yVals, label)
-        this.styleDataSet(dataSet)
+        this.styleDataSet(0, dataSet)
         this.data = LineData(dataSet)
     }
 
-    private fun styleDataSet(dataSet : LineDataSet) {
-        val accent = CommonUtil.getAttributeColor(R.attr.colorAccent, context)
+    fun addDataSet(dataSets : List<LineDataSet>) {
+        for(i in 0 until dataSets.size) {
+            this.styleDataSet(i, dataSets[i])
+        }
+        this.data = LineData(dataSets)
+    }
+
+    private fun styleDataSet(index : Int, dataSet : LineDataSet) {
+        val accent = accentColors[index % accentColors.size]
         dataSet.color = accent
         dataSet.setDrawValues(false)
         dataSet.lineWidth = 4.0f
