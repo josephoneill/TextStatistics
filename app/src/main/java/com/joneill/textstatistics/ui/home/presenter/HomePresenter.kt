@@ -34,7 +34,8 @@ open class HomePresenter<V : HomeMVPView, I : HomeMVPInteractor> @Inject interna
 
         val msgs = it.getMessagesInDateRange(it.getMessages(), CommonUtil.getDateXDaysAgo(30), Date(System.currentTimeMillis()))
         getView()?.displayTopContactsList(it.getContactsSortedByMessageCount(msgs).filter{it.first != null}.take(5))
-        loadChart("Texts Sent (Weekly)", 7, false)
+        this.loadChart("Texts Sent (Weekly)", 7, false)
+        this.loadTotalMessagesCard()
     }
 
     private fun loadChart(title: String, days: Long, animateX: Boolean) = interactor?.let {
@@ -64,6 +65,15 @@ open class HomePresenter<V : HomeMVPView, I : HomeMVPInteractor> @Inject interna
         comparisonsList.add(ComparisonEntrySet(receivedEntries, ""))
 
         getView()?.showChartCard(title, messages.count().toString(), comparisonsList, animateX)
+    }
+
+    private fun loadTotalMessagesCard() = interactor.let {
+        var messageCount = it?.getMessages()?.size
+
+        if (messageCount == null) {
+            messageCount = 0
+        }
+        getView()?.showTotalMessagesCard(messageCount)
     }
 
     override fun onContactItemClick(contact: Contact) {
