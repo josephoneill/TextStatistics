@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/layout_stats_entry_card_holder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_stats_list_item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                tools:text="Contact Name" />
+
+            <TextView
+                android:id="@+id/tv_stats_list_item_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="4dp"
+                android:textColor="?attr/colorTextAccent"
+                android:textSize="14sp"
+                tools:text="Contact Name" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
