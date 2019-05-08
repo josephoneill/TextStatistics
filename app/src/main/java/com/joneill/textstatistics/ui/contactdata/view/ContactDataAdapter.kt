@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.joneill.textstatistics.R
 import com.joneill.textstatistics.data.text.data.Message
-import kotlinx.android.synthetic.main.contact_data_list.view.*
+import kotlinx.android.synthetic.main.contact_data_list_item.view.*
 
 class ContactDataAdapter(private val messagesList: MutableList<Message>) : RecyclerView.Adapter<ContactDataAdapter.ContactsViewHolder>() {
 
@@ -18,7 +18,7 @@ class ContactDataAdapter(private val messagesList: MutableList<Message>) : Recyc
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ContactsViewHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.contact_data_list, parent, false))
+            .inflate(R.layout.contact_data_list_item, parent, false))
 
     internal fun addMessagesToList(messages: List<Message>) {
         this.messagesList.addAll(messages)
