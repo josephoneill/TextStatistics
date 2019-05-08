@@ -39,11 +39,10 @@ open class HomePresenter<V : HomeMVPView, I : HomeMVPInteractor> @Inject interna
     }
 
     private fun loadChart(title: String, days: Long, animateX: Boolean) = interactor?.let {
-        var messages = it.getMessages()
+        val messages = it.getMessagesInDateRange(it.getMessages(), CommonUtil.getDateXDaysAgo(days), Date(System.currentTimeMillis()))
         val comparisonsList : MutableList<ComparisonEntrySet> = mutableListOf()
         val sentEntries: MutableList<CountedDateMessageEntry> = mutableListOf()
         val receivedEntries: MutableList<CountedDateMessageEntry> = mutableListOf()
-        messages = it.getMessagesInDateRange(messages, CommonUtil.getDateXDaysAgo(days), Date(System.currentTimeMillis()))
         val sentMessages = messages.filter { message -> message.sent}
         val receivedMessages = messages.filter { message -> !message.sent}
         val sentCounts = it.getMessageCountByDate(sentMessages)
