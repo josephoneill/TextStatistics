@@ -27,7 +27,7 @@ abstract class BaseFragment : Fragment(), MVPView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUp()
+        init()
     }
 
     fun getBaseActivity() = parentActivity
@@ -39,5 +39,5 @@ abstract class BaseFragment : Fragment(), MVPView {
         fun onFragmentDetached(tag: String)
     }
 
-    abstract fun setUp()
+    abstract fun init()
 }
