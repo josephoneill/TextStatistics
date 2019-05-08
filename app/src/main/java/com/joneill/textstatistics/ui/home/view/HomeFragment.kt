@@ -53,7 +53,7 @@ class HomeFragment : BaseFragment(), HomeMVPView {
         home_progress_bar?.visibility = View.GONE
     }
 
-    override fun setUp() {
+    override fun init() {
         topContactsAdapter.setPresenter(topContactsPresenter)
         topContactsAdapter.onRecyclerItemClickListener = object : OnContactItemClickListener {
             override fun onItemClick(contact: Contact) {
