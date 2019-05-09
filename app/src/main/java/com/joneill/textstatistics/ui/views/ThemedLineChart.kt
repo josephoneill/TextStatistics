@@ -5,18 +5,17 @@ import android.graphics.Color
 import android.util.AttributeSet
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.joneill.textstatistics.R
 import com.joneill.textstatistics.util.CommonUtil
 
 class ThemedLineChart : LineChart {
-    private lateinit var accentColors : IntArray
+    private lateinit var accentColors: IntArray
 
-    constructor(context : Context) : super(context)
-    constructor(context : Context?, attrs: AttributeSet) : super(context, attrs)
-    constructor(context : Context?, attrs: AttributeSet, defStyle : Int) : super(context, attrs, defStyle)
+    constructor(context: Context) : super(context)
+    constructor(context: Context?, attrs: AttributeSet) : super(context, attrs)
+    constructor(context: Context?, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
 
     override fun init() {
         super.init()
@@ -57,20 +56,52 @@ class ThemedLineChart : LineChart {
         accentColors = intArrayOf(accent1, accent2)
     }
 
-    fun addDataSet(yVals: List<Entry>, label : String) {
-        val dataSet = LineDataSet(yVals, label)
-        this.styleDataSet(0, dataSet)
-        this.data = LineData(dataSet)
+    fun addDataSet(set: LineDataSet) {
+        this.styleDataSet(0, set)
+
+        if (this.data == null) {
+            this.data = LineData(set)
+        } else {
+            this.data.addDataSet(set)
+        }
+        this.notifyDataSetChanged()
+        this.invalidate()
     }
 
-    fun addDataSet(dataSets : List<LineDataSet>) {
-        for(i in 0 until dataSets.size) {
+    fun addDataSets(sets : List<LineDataSet>) {
+        sets.forEachIndexed { i, dataSet ->
+            this.styleDataSet(i, dataSet)
+            if (data == null) {
+                this.data = LineData(dataSet)
+            } else {
+                this.data.addDataSet(dataSet)
+            }
+        }
+        this.notifyDataSetChanged()
+        this.invalidate()
+    }
+
+    fun resetData() {
+        this.data = null
+    }
+
+   /* fun addDataSet(dataSets: List<LineDataSet>) {
+        for (i in 0 until dataSets.size) {
             this.styleDataSet(i, dataSets[i])
         }
-        this.data = LineData(dataSets)
-    }
+        if (this.data == null) {
+            this.data = LineData(dataSets)
+        } else {
+            dataSets.forEach {
+                this.data.addDataSet(it)
+            }
+        }
+        this.notifyDataSetChanged()
+        this.invalidate()
+    } */
 
-    private fun styleDataSet(index : Int, dataSet : LineDataSet) {
+
+    private fun styleDataSet(index: Int, dataSet: LineDataSet) {
         val accent = accentColors[index % accentColors.size]
         dataSet.color = accent
         dataSet.setDrawValues(false)
