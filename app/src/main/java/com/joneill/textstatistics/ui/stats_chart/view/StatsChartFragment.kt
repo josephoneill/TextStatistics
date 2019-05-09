@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.mikephil.charting.data.LineDataSet
 import com.joneill.textstatistics.R
 import com.joneill.textstatistics.data.text.data.Contact
 import com.joneill.textstatistics.ui.base.view.BaseFragment
@@ -51,5 +52,13 @@ class StatsChartFragment : BaseFragment(), StatsChartMVPView {
         stats_chart_recycler_view.itemAnimator = DefaultItemAnimator()
         stats_chart_recycler_view.adapter = statsEntriesAdapter
         presenter.onViewPrepared()
+    }
+
+    override fun addSetsToChart(dataSets: List<LineDataSet>) {
+        stats_line_chart.addDataSets(dataSets)
+    }
+
+    override fun addSetToChart(dataSet: LineDataSet) {
+        stats_line_chart.addDataSet(dataSet)
     }
 }
