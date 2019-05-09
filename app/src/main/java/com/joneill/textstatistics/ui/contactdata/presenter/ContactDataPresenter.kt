@@ -34,7 +34,7 @@ open class ContactDataPresenter<V : ContactDataMVPView, I : ContactDataMVPIntera
     }
 
     private fun loadChart(title: String, days: Long, animateX: Boolean, data : List<Message>) = interactor?.let {
-        val messages = it.getMessagesInDateRange(it.getMessages(), CommonUtil.getDateXDaysAgo(days), Date(System.currentTimeMillis()))
+        val messages = it.getMessagesInDateRange(data, CommonUtil.getDateXDaysAgo(days), Date(System.currentTimeMillis()))
         val comparisonsList : MutableList<LineDataSet> = mutableListOf()
         val sentEntries: MutableList<Entry> = mutableListOf()
         val receivedEntries: MutableList<Entry> = mutableListOf()
