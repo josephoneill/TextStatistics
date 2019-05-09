@@ -8,7 +8,6 @@ import com.joneill.textstatistics.ui.home.presenter.adapter.TopContactsMVPPresen
 import com.joneill.textstatistics.ui.home.presenter.adapter.TopContactsPresenter
 import com.joneill.textstatistics.ui.home.view.HomeFragment
 import com.joneill.textstatistics.ui.home.view.HomeMVPView
-import com.joneill.textstatistics.ui.home.view.adapter.ContactsAdapter
 import com.joneill.textstatistics.ui.home.view.adapter.TopContactsAdapter
 import com.joneill.textstatistics.ui.home.view.adapter.TopContactsMVPView
 import dagger.Module
@@ -23,9 +22,6 @@ class HomeFragmentModule {
     @Provides
     internal fun provideHomePresenter(homePresenter: HomePresenter<HomeMVPView, HomeMVPInteractor>)
             : HomeMVPPresenter<HomeMVPView, HomeMVPInteractor> = homePresenter
-
-    @Provides
-    internal fun provideContactsAdapter(): ContactsAdapter = ContactsAdapter(ArrayList())
 
     @Provides
     internal fun provideTopContactsPresenter(topContactsPresenter: TopContactsPresenter<TopContactsMVPView, HomeMVPInteractor>)
