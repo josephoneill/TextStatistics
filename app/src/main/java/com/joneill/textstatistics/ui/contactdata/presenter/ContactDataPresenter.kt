@@ -1,9 +1,8 @@
 package com.joneill.textstatistics.ui.contactdata.presenter
 
 import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineDataSet
 import com.google.gson.Gson
-import com.joneill.textstatistics.data.graph.ComparisonEntrySet
-import com.joneill.textstatistics.data.graph.CountedDateMessageEntry
 import com.joneill.textstatistics.data.text.data.Contact
 import com.joneill.textstatistics.data.text.data.Message
 import com.joneill.textstatistics.ui.base.presenter.BasePresenter
@@ -35,30 +34,35 @@ open class ContactDataPresenter<V : ContactDataMVPView, I : ContactDataMVPIntera
     }
 
     private fun loadChart(title: String, days: Long, animateX: Boolean, data : List<Message>) = interactor?.let {
-        var messages = data
-        val comparisonsList : MutableList<ComparisonEntrySet> = mutableListOf()
-        val sentEntries: MutableList<CountedDateMessageEntry> = mutableListOf()
-        val receivedEntries: MutableList<CountedDateMessageEntry> = mutableListOf()
-        messages = it.getMessagesInDateRange(messages, CommonUtil.getDateXDaysAgo(days), Date(System.currentTimeMillis()))
+        val messages = it.getMessagesInDateRange(it.getMessages(), CommonUtil.getDateXDaysAgo(days), Date(System.currentTimeMillis()))
+        val comparisonsList : MutableList<LineDataSet> = mutableListOf()
+        val sentEntries: MutableList<Entry> = mutableListOf()
+        val receivedEntries: MutableList<Entry> = mutableListOf()
+        val xAxisLabels : MutableList<String> = mutableListOf()
+
         val sentMessages = messages.filter { message -> message.sent}
-        val receivedMessages = messages.filter { message -> !message.sent}
+        val receivedMessages = messages.minus(sentMessages)
+
         val sentCounts = it.getMessageCountByDate(sentMessages)
         val receivedCounts = it.getMessageCountByDate(receivedMessages)
 
         for (i in 0 until days) {
             val date = CommonUtil.getDateXDaysAgo(days - 1 - i)
-            val name = SimpleDateFormat("MM/dd").format(date)
-            var sentCount: Float? = sentCounts[name]?.toFloat()
-            var receivedCount: Float? = receivedCounts[name]?.toFloat()
+            val xLabel = SimpleDateFormat("MM/dd").format(date)
+            var sentCount: Float? = sentCounts[xLabel]?.toFloat()
+            var receivedCount: Float? = receivedCounts[xLabel]?.toFloat()
+
             if(sentCount == null) sentCount = 0.0f
             if(receivedCount == null) receivedCount = 0.0f
 
-            sentEntries.add(CountedDateMessageEntry(name, Entry(i.toFloat(), sentCount)))
-            receivedEntries.add(CountedDateMessageEntry(name, Entry(i.toFloat(), receivedCount)))
+            sentEntries.add(Entry(i.toFloat(), sentCount))
+            receivedEntries.add(Entry(i.toFloat(), receivedCount))
+            xAxisLabels.add(xLabel)
         }
 
-        comparisonsList.add(ComparisonEntrySet(sentEntries, ""))
-        comparisonsList.add(ComparisonEntrySet(receivedEntries, ""))
-        getView()?.showChartCard(title, messages.count().toString(), comparisonsList, animateX)
+        comparisonsList.add(LineDataSet(sentEntries, ""))
+        comparisonsList.add(LineDataSet(receivedEntries, ""))
+
+        getView()?.showChartCard(title, messages.count().toString(), comparisonsList, xAxisLabels, animateX)
     }
 }
