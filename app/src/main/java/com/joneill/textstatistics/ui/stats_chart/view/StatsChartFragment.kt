@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.joneill.textstatistics.R
 import com.joneill.textstatistics.data.text.data.Contact
 import com.joneill.textstatistics.ui.base.view.BaseFragment
@@ -51,14 +52,37 @@ class StatsChartFragment : BaseFragment(), StatsChartMVPView {
         stats_chart_recycler_view.layoutManager = layoutManager.get()
         stats_chart_recycler_view.itemAnimator = DefaultItemAnimator()
         stats_chart_recycler_view.adapter = statsEntriesAdapter
+
+        test_button.setOnClickListener {
+            presenter.test()
+        }
+
         presenter.onViewPrepared()
     }
 
-    override fun addSetsToChart(dataSets: List<LineDataSet>) {
+    override fun setXLabels(xAxisLabels : List<String>) {
+        val formatter = IAxisValueFormatter { value, _ ->
+            xAxisLabels[value.toInt()]
+        }
+
+        stats_line_chart.xAxis.valueFormatter = formatter
+    }
+
+    override fun addSetsToChart(dataSets: List<LineDataSet>, animateX : Boolean) {
+        if (animateX) {
+            stats_line_chart.animateX(1000)
+        } else {
+            stats_line_chart.animateY(700)
+        }
         stats_line_chart.addDataSets(dataSets)
     }
 
-    override fun addSetToChart(dataSet: LineDataSet) {
+    override fun addSetToChart(dataSet: LineDataSet,animateX : Boolean) {
+        if (animateX) {
+            stats_line_chart.animateX(1000)
+        } else {
+            stats_line_chart.animateY(700)
+        }
         stats_line_chart.addDataSet(dataSet)
     }
 }

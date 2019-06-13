@@ -57,49 +57,31 @@ class ThemedLineChart : LineChart {
     }
 
     fun addDataSet(set: LineDataSet) {
-        this.styleDataSet(0, set)
+        var colorIndex = 0
 
         if (this.data == null) {
             this.data = LineData(set)
+        this.notifyDataSetChanged()
+        this.invalidate()
         } else {
             this.data.addDataSet(set)
+            colorIndex = this.data.dataSetCount + 1
         }
+
+        this.styleDataSet(colorIndex, set)
         this.notifyDataSetChanged()
         this.invalidate()
     }
 
     fun addDataSets(sets : List<LineDataSet>) {
-        sets.forEachIndexed { i, dataSet ->
-            this.styleDataSet(i, dataSet)
-            if (data == null) {
-                this.data = LineData(dataSet)
-            } else {
-                this.data.addDataSet(dataSet)
-            }
+        sets.forEach { dataSet ->
+            this.addDataSet(dataSet)
         }
-        this.notifyDataSetChanged()
-        this.invalidate()
     }
 
     fun resetData() {
         this.data = null
     }
-
-   /* fun addDataSet(dataSets: List<LineDataSet>) {
-        for (i in 0 until dataSets.size) {
-            this.styleDataSet(i, dataSets[i])
-        }
-        if (this.data == null) {
-            this.data = LineData(dataSets)
-        } else {
-            dataSets.forEach {
-                this.data.addDataSet(it)
-            }
-        }
-        this.notifyDataSetChanged()
-        this.invalidate()
-    } */
-
 
     private fun styleDataSet(index: Int, dataSet: LineDataSet) {
         val accent = accentColors[index % accentColors.size]
