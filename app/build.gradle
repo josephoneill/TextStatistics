@@ -11,11 +11,11 @@ androidExtensions {
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.joneill.textstatistics"
         minSdkVersion 15
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -29,16 +29,16 @@ android {
 }
 
 dependencies {
-    def lifecycle_version = "2.0.0"
+    def lifecycle_version = "2.1.0"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.preference:preference:1.1.0-beta01'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.preference:preference:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'androidx.core:core-ktx:1.0.2'
+    implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'com.google.dagger:dagger:2.22.1'
     implementation 'com.google.dagger:dagger-android:2.22.1'
     implementation 'com.google.dagger:dagger-android-support:2.22.1'
@@ -58,6 +58,6 @@ dependencies {
     implementation 'com.android.support:design:28.1'
     implementation 'com.android.support:gridlayout-v7:28.1'
     implementation 'com.google.code.gson:gson:2.8.5'
-    kapt 'com.android.tools.build.jetifier:jetifier-core:1.0.0-beta04'
-    annotationProcessor 'com.android.tools.build.jetifier:jetifier-core:1.0.0-beta04'
+    kapt 'com.android.tools.build.jetifier:jetifier-core:1.0.0-beta07'
+    annotationProcessor 'com.android.tools.build.jetifier:jetifier-core:1.0.0-beta07'
 }
